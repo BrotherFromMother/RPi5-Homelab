@@ -2,58 +2,80 @@
 Enterprise-grade monitoring and security stack on Raspberry Pi 5
 
 
-
 👋 Cześć, tu Rafał!
 🎓 Student Informatyki (V semestr) | Junior System Administrator | Pasjonat Homelabów
+
+
 Jestem na ostatniej prostej studiów inżynierskich, a moją pasją jest budowanie skalowalnej i bezpiecznej infrastruktury IT. Zamiast uczyć się tylko teorii, zarządzam własnym laboratorium opartym na architekturze hybrydowej, gdzie testuję rozwiązania klasy korporacyjnej.
 
-🚀 Mój Flagowy Projekt: Enterprise-Grade RPi5 Homelab
-Buduję system monitoringu i bezpieczeństwa (SIEM), który udowadnia, że profesjonalną administrację można uprawiać nawet na platformach ARM.
+Celem projektu jest zbudowanie skalowalnego i bezpiecznego środowiska serwerowego służącemu do testowania rozwiązań enterprise. 
 
-Infrastruktura: Raspberry Pi 5 (8GB RAM) z dyskiem NVMe M.2 dla maksymalnej wydajności I/O.
+Cała infrastruktura jest postawiona na Raspberry Pi 5 8GB z dyskiem M.2 NVMe. 
 
-Stos LGTM: Pełna implementacja Loki, Grafana, Tailscale i Prometheus w kontenerach Docker.
+Wszytskie usługi postawiłem na Dockerze, do łatwiejszego zarządzania i większego bezpieczeństwa. Aktualne usługi (stacki) wraz z kontenerami wyglądają następująco:
+Zabbix 
+Wazuh single-node
+Passbolt
+Nginx-Proxy-Manager
+Gitea
+LGM ( Loki, Grafana Prometheus)
 
-Bezpieczeństwo: Aktywne monitorowanie zagrożeń i integralności systemu za pomocą Wazuh (SIEM).
+Wszystko jest zarządzane poprzez Porteiner oraz Gitea, a do łączenia się zdalnie do infrasktury używam narzędzia TailScale 
 
-Automatyzacja: Zarządzanie stosami przez Portainer oraz wersjonowanie konfiguracji w prywatnej instancji Gitea.
 
-📊 Statystyki z mojego laboratorium (Real-time data)
-Dzięki precyzyjnej optymalizacji zasobów (Docker limits), moje środowisko utrzymuje wzorcowe parametry:
 
-Obciążenie CPU: ~1.7% (nawet przy aktywnym monitoringu!).
+<details>
+<summary>🐳 Kliknij, aby zobaczyć aktualny status kontenerów (dps)</summary>
 
-Zużycie pamięci RAM: ~22.3% z dostępnych 8GB.
+<br>
 
-Status monitoringu: Wszystkie cele (targets) Prometheusa mają status UP.
+```bash
+pi@pi:~ $ dps
+NAMES                           STATUS
+monitoring-node-exporter        Up 16 hours
+monitoring-promtail             Up 16 hours
+monitoring-grafana              Up 16 hours
+monitoring-loki                 Up 16 hours
+monitoring-prometheus           Up 16 hours
+single-node-wazuh.dashboard-1   Up About a minute
+single-node-wazuh.manager-1     Up About a minute
+single-node-wazuh.indexer-1     Up About a minute
+zbx-web                         Up 16 hours (healthy)
+zbx-agent                       Up 16 hours
+zbx-server                      Up 16 hours
+zbx-mysql                       Up 16 hours
+gitea-runner                    Up 16 hours
+gitea-srv                       Up 16 hours
+gitea-tailscale                 Up 16 hours
+gitea-db                        Up 16 hours
+passbolt-app                    Up 16 hours
+passbolt-db                     Up 16 hours
+nginx-proxy-manager             Up 16 hours
+portainer                       Up 16 hours
+```
 
-Temperatura robocza: Średnio 76.3°C (co stało się podstawą do analizy wydajności chłodzenia pasywnego vs aktywnego).
+</details>
 
-🛠 Moje Umiejętności (Tech Stack)
-Systemy: Linux (Debian/Ubuntu), Windows Server (podstawy AD).
 
-Konteneryzacja: Docker, Docker Compose, Portainer.
 
-Monitoring: Grafana, Prometheus, Loki, Node Exporter.
 
-Security: Wazuh SIEM, analizowanie logów, zarządzanie regułami firewall.
+W planach mam kupno aktywnego chłodzenia do malinki, gdyż przy włączonym wazuhu temeperatura procesora wzrasta.
 
-GitOps: Gitea, GitHub (wersjonowanie infrastruktury jako kod).
 
-Troubleshooting: Debugowanie błędów YAML, rozwiązywanie problemów z montowaniem wolumenów i uprawnieniami systemowymi.
 
-🎯 Cele na najbliższe 2 semestry
-[ ] Certyfikacja: Przygotowanie do AZ-900 / AZ-104 (Microsoft Azure).
+<details>
+<summary>Kliknij by zobaczyć zużycie zasoób</summary>
 
-[ ] Chmura Hybrydowa: Migracja ciężkich usług (Wazuh Manager) do Oracle Cloud (Always Free ARM) w celu odciążenia lokalnego CPU.
+<br>
 
-[ ] Sieci: Zestawienie bezpiecznego tunelu VPN (Site-to-Site) między domem a chmurą.
-
-[ ] Automatyzacja: Nauka Ansible do zarządzania konfiguracją wielu węzłów.
-
-📫 Jak mnie znaleźć?
-GitHub: [Twój Link]
-
-LinkedIn: [Twój Link]
-
-Lokalne Laboratorium: Działa 24/7 na mojej Malince! 🍓
+```bash
+pi@pi:~ $ vcgencmd measure_temp
+temp=67.0'C
+pi@pi:~ $ vcgencmd measure_temp
+temp=67.5'C
+pi@pi:~ $ free -h
+               total        used        free      shared  buff/cache   available
+Mem:           7.9Gi       3.9Gi       239Mi        74Mi       4.0Gi       4.0Gi
+Swap:          1.0Gi       638Mi       385Mi
+```
+</details>
