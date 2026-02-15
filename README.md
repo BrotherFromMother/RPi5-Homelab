@@ -21,37 +21,76 @@ Gitea
 LGM ( Loki, Grafana Prometheus)
 
 Wszystko jest zarządzane poprzez Porteiner oraz Gitea, a do łączenia się zdalnie do infrasktury używam narzędzia TailScale 
+
+
+
 pi@pi:~ $ dps
+
 NAMES                           STATUS
+
 monitoring-node-exporter        Up 16 hours
+
 monitoring-promtail             Up 16 hours
+
 monitoring-grafana              Up 16 hours
+
 monitoring-loki                 Up 16 hours
+
 monitoring-prometheus           Up 16 hours
+
 single-node-wazuh.dashboard-1   Up About a minute
+
 single-node-wazuh.manager-1     Up About a minute
+
 single-node-wazuh.indexer-1     Up About a minute
+
 zbx-web                         Up 16 hours (healthy)
+
 zbx-agent                       Up 16 hours
+
 zbx-server                      Up 16 hours
+
 zbx-mysql                       Up 16 hours
+
 gitea-runner                    Up 16 hours
+
 gitea-srv                       Up 16 hours
+
 gitea-tailscale                 Up 16 hours
+
 gitea-db                        Up 16 hours
+
 passbolt-app                    Up 16 hours
+
 passbolt-db                     Up 16 hours
+
 nginx-proxy-manager             Up 16 hours
+
 portainer                       Up 16 hours
 
+
+
 W planach mam kupno aktywnego chłodzenia do malinki, gdyż przy włączonym wazuhu temeperatura procesora wzrasta.
+
+
+
+
 pi@pi:~ $ vcgencmd measure_temp
+
 temp=69.2'C
+
 pi@pi:~ $ vcgencmd measure_temp
+
 temp=67.0'C
-z Pamięcią RAM nie jest najgorzej
+
+Pamięcią RAM 
+
 pi@pi:~ $ free -h
+
                total        used        free      shared  buff/cache   available
+               
 Mem:           7.9Gi       3.9Gi       239Mi        74Mi       4.0Gi       4.0Gi
+
 Swap:          1.0Gi       638Mi       385Mi
+
 pi@pi:~ $
