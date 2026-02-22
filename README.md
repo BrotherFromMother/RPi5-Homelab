@@ -7,18 +7,20 @@ Profesjonalne laboratorium inżynierskie oparte na architekturze hybrydowej, ł�
 
 ## 👨‍💻 O mnie
 
-Jestem studentem ostatniego semestru Informatyki i Młodszym Administratorem Systemów. Moja pasja to budowanie bezpiecznej i skalowalnej infrastruktury IT. Ten projekt jest moim poligonem doświadczalnym, gdzie teorię zamieniam na praktyczne wdrożenia rozwiązań, z którymi stykam się w środowiskach komercyjnych.
+Jestem studentem ostatniego semestru Informatyki i pracującym Junior System Administratorem. Moja pasja to budowanie bezpiecznej i zautomatyzowanej infrastruktury IT. Ten projekt to mój poligon doświadczalny, gdzie wiedzę akademicką zamieniam na praktyczne wdrożenia technologii używanych w nowoczesnych środowiskach komercyjnych.
+
+## 🛠️ Tech Stack
+
+* **Infrastruktura & Chmura:** Raspberry Pi 5 (On-Premise), Microsoft Azure (VM, File Share), Google Cloud Platform (Compute Engine)
+* **Wirtualizacja & Orkiestracja:** Docker, Docker Compose, Portainer CE (Zarządzanie flotą)
+* **Sieci & Bezpieczeństwo:** Tailscale (Mesh VPN), Nginx Proxy Manager (Reverse Proxy), Wazuh SIEM, Passbolt
+* **Obserwowalność (Observability):** Zabbix (Server & Agents)
 
 ---
 
 ## 🏗️ Architektura i Komunikacja
 
-Infrastruktura działa w modelu hybrydowym. Centralny punkt zarządzania i przechowywania danych znajduje się on-premise (RPi5), natomiast usługi wystawione na świat (frontend) lub pomocnicze zostały wyniesione do chmury publicznej w celu zwiększenia bezpieczeństwa i separacji ruchu.
-
-**Kluczowe elementy komunikacji:**
-
-* **Tailscale Mesh VPN:** Wszystkie węzły (RPi, Azure VM, GCP VM) są połączone prywatną, szyfrowaną siecią mesh. Umożliwia to bezpieczną komunikację międzyusługową (np. agent Zabbixa z Azure do serwera na RPi) bez wystawiania portów do publicznego internetu.
-* **Secure Gateway (Azure):** Maszyna wirtualna Azure pełni rolę bezpiecznej bramy wejściowej. Działa tam Nginx Proxy Manager, który przyjmuje ruch publiczny (HTTP/HTTPS) i bezpiecznym tunelem Tailscale przekierowuje go do usług wewnętrznych na RPi (np. Passbolt).
+Poniższy diagram przedstawia przepływ ruchu sieciowego oraz logiczną separację warstw w modelu hybrydowym.
 
 ```mermaid
 graph TD
@@ -91,13 +93,3 @@ graph TD
     class Local onprem;
     class Tailscale vpn;
     class SMB storage;
-```
-
-### 🛡️ Omówienie Architektury Hybrydowej
-
-Zaprojektowana przeze mnie infrastruktura opiera się na zasadzie Zero-Trust i ścisłej separacji usług:
-
-* **Zarządzanie Flotą Kontenerów:** Serce systemu stanowi `Portainer CE` działający na Raspberry Pi, który poprzez bezpieczne połączenie (port 9001) zarządza agentami na instancjach chmurowych (Azure, GCP). Umożliwia to wdrażanie stacków na dowolnym węźle z jednego, centralnego panelu.
-* **Obserwowalność i Bezpieczeństwo (Observability & Security):** Na każdym węźle w chmurze działają zoptymalizowane agenty przesyłające dane telemetryczne do serwera `Zabbix` (port 10051) oraz logi bezpieczeństwa do menedżera `Wazuh SIEM` (porty 1514/1515). Pozwala to na błyskawiczne reagowanie na anomalie.
-* **Bezpieczna Komunikacja (Mesh VPN):** Żadna usługa wewnętrzna (w tym bazy danych czy panele zarządzania) nie jest wystawiona bezpośrednio do publicznego internetu. Cały ruch między chmurami a serwerownią domową odbywa się przez szyfrowaną sieć `Tailscale`.
-* **Skalowalny Storage:** Zamiast obciążać ograniczony dysk lokalny lub tworzyć drogie dyski maszyn wirtualnych, podpiąłem zewnętrzny udział plikowy Azure File Share (SMB, port 445), który służy węzłom jako wspólne repozytorium na backupy (np. zrzuty bazy Passbolta).
