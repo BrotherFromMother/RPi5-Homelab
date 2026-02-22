@@ -11,10 +11,26 @@ Jestem studentem ostatniego semestru Informatyki i pracującym Junior System Adm
 
 ## 🛠️ Tech Stack
 
-* **Infrastruktura & Chmura:** Raspberry Pi 5 (On-Premise), Microsoft Azure (VM, File Share), Google Cloud Platform (Compute Engine)
-* **Wirtualizacja & Orkiestracja:** Docker, Docker Compose, Portainer CE (Zarządzanie flotą)
-* **Sieci & Bezpieczeństwo:** Tailscale (Mesh VPN), Nginx Proxy Manager (Reverse Proxy), Wazuh SIEM, Passbolt
-* **Obserwowalność (Observability):** Zabbix (Server & Agents)
+### Infrastruktura & Chmura
+![Raspberry Pi](https://img.shields.io/badge/-RaspberryPi-C51A4A?style=for-the-badge&logo=Raspberry-Pi)
+![Microsoft Azure](https://img.shields.io/badge/azure-%230072C6.svg?style=for-the-badge&logo=microsoftazure&logoColor=white)
+![Google Cloud](https://img.shields.io/badge/GoogleCloud-%234285F4.svg?style=for-the-badge&logo=google-cloud&logoColor=white)
+
+### Wirtualizacja & Orkiestracja
+![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
+![Portainer](https://img.shields.io/badge/Portainer-13BEF9?style=for-the-badge&logo=Portainer&logoColor=white)
+![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
+
+### Sieci & Bezpieczeństwo
+![Tailscale](https://img.shields.io/badge/Tailscale-FFFFFF?style=for-the-badge&logo=Tailscale&logoColor=black)
+![Nginx Proxy Manager](https://img.shields.io/badge/Nginx-009639?style=for-the-badge&logo=nginx&logoColor=white)
+![Wazuh](https://img.shields.io/badge/Wazuh-00A8E6?style=for-the-badge&logo=Wazuh&logoColor=white)
+![Passbolt](https://img.shields.io/badge/Passbolt-E22A56?style=for-the-badge&logo=Passbolt&logoColor=white)
+
+### Obserwowalność (Monitoring)
+![Zabbix](https://img.shields.io/badge/Zabbix-D40000?style=for-the-badge&logo=Zabbix&logoColor=white)
+![Grafana](https://img.shields.io/badge/grafana-%23F46800.svg?style=for-the-badge&logo=grafana&logoColor=white)
+![Prometheus](https://img.shields.io/badge/Prometheus-E6522C?style=for-the-badge&logo=Prometheus&logoColor=white)
 
 ---
 
