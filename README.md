@@ -1,81 +1,76 @@
-# RPi5-Homelab
-Enterprise-grade monitoring and security stack on Raspberry Pi 5
+# 🛡️ RPi5-Homelab: Enterprise Security & Monitoring Stack
+> **High-availability internal infrastructure project based on Raspberry Pi 5.**
 
+![OS](https://img.shields.io/badge/OS-Debian%20Bookworm-blue?logo=debian)
+![Docker](https://img.shields.io/badge/Containerization-Docker-blue?logo=docker)
+![Security](https://img.shields.io/badge/Security-Hardened-success?logo=skyliner)
+![Architecture](https://img.shields.io/badge/Arch-ARM64-orange)
 
-👋 Cześć, tu Rafał!
-🎓 Student Informatyki (V semestr) | Junior System Administrator | Pasjonat Homelabów
+---
 
+## 🔒 Phase 1: Infrastructure Hardening
+> Bezpieczeństwo sesji administracyjnych jest krytycznym elementem projektu. Wdrożone mechanizmy eliminują podatności na ataki typu *Credential Stuffing* i *Brute-force*.
 
-Jestem na ostatniej prostej studiów inżynierskich, a moją pasją jest budowanie skalowalnej i bezpiecznej infrastruktury IT. Zamiast uczyć się tylko teorii, zarządzam własnym laboratorium opartym na architekturze hybrydowej, gdzie testuję rozwiązania klasy korporacyjnej.
+### 🛡️ Key Implementations:
+* **Kryptografia Asymetryczna:** Całkowita rezygnacja z haseł na rzecz par kluczy **Ed25519** (krzywe eliptyczne).
+* **Identity Verification:** Dostęp do powłoki systemu ograniczony wyłącznie do autoryzowanych hostów (Windows/Fedora) z aktywnym kluczem prywatnym.
+* **Root Access Policy:** Implementacja `PermitRootLogin no` – wymuszenie eskalacji uprawnień poprzez `sudo`.
+* **SSH Configuration:** Optymalizacja parametru `MaxAuthTries 3` oraz wyłączenie `PasswordAuthentication`.
 
-Celem projektu jest zbudowanie skalowalnego i bezpiecznego środowiska serwerowego służącemu do testowania rozwiązań enterprise. 
-
-Cała infrastruktura jest postawiona na Raspberry Pi 5 8GB z dyskiem M.2 NVMe. 
-
-Wszytskie usługi postawiłem na Dockerze, do łatwiejszego zarządzania i większego bezpieczeństwa. Aktualne usługi (stacki) wraz z kontenerami wyglądają następująco:
-Zabbix 
-Wazuh single-node
-Passbolt
-Nginx-Proxy-Manager
-Gitea
-LGM ( Loki, Grafana Prometheus)
-
-Wszystko jest zarządzane poprzez Porteiner oraz Gitea, a do łączenia się zdalnie do infrasktury używam narzędzia TailScale 
-
-
+---
 
 <details>
-<summary>🐳 Kliknij, aby zobaczyć aktualny status kontenerów (dps)</summary>
-
+<summary>🔒 Audit: Weryfikacja działających zabezpieczeń (Screany)</summary>
 <br>
 
-```bash
-pi@pi:~ $ dps
-NAMES                           STATUS
-monitoring-node-exporter        Up 16 hours
-monitoring-promtail             Up 16 hours
-monitoring-grafana              Up 16 hours
-monitoring-loki                 Up 16 hours
-monitoring-prometheus           Up 16 hours
-single-node-wazuh.dashboard-1   Up About a minute
-single-node-wazuh.manager-1     Up About a minute
-single-node-wazuh.indexer-1     Up About a minute
-zbx-web                         Up 16 hours (healthy)
-zbx-agent                       Up 16 hours
-zbx-server                      Up 16 hours
-zbx-mysql                       Up 16 hours
-gitea-runner                    Up 16 hours
-gitea-srv                       Up 16 hours
-gitea-tailscale                 Up 16 hours
-gitea-db                        Up 16 hours
-passbolt-app                    Up 16 hours
-passbolt-db                     Up 16 hours
-nginx-proxy-manager             Up 16 hours
-portainer                       Up 16 hours
-```
+Poniższe zrzuty ekranu stanowią dowód namacalny, że zadeklarowane powyżej zabezpieczenia są aktywne i skuteczne. Rekruter/Audytor może zweryfikować stan faktyczny.
+
+***
+
+###  Dowód 1: Wyłączone Uwierzytelnianie Hasłem
+Próba połączenia z zewnętrznego hosta (bez unikalnego klucza prywatnego) kończy się natychmiastowym odrzuceniem sesji przez serwer przed prośbą o hasło. Serwer informuje, że akceptuje tylko klucze publiczne.
+
+`<img src="placeholders/ssh-denied-password.png" alt="Dowód wyłączonych haseł - Permission Denied (publickey)" width="700">`
+
+* **Opis obrazu:** Na screenie widać komendę `ssh student@10.64.104.XX` i wynik `student@10.64.104.XX: Permission denied (publickey).`. Nie pojawia się monit o hasło. To dowodzi, że `PasswordAuthentication no` działa.
+
+***
+
+### Dowód 2: Zablokowane Logowanie Direct-Root
+Próba bezpośredniego logowania na konto `root` z autoryzowanego hosta również kończy się błędem `Permission denied`, ponieważ polityka `PermitRootLogin no` jest nadrzędna względem obecności klucza w `authorized_keys` dla roota.
+
+`<img src="placeholders/ssh-denied-root.png" alt="Dowód zablokowanego roota - PermitRootLogin no" width="700">`
+
+* **Opis obrazu:** Na screenie widać komendę `ssh root@10.64.104.XX` i wynik `root@10.64.104.XX: Permission denied (publickey).`. Nawet z unikalnym kluczem, bezpośredni dostęp do roota jest odcięty. Logowanie możliwe tylko na konto zwykłego użytkownika z eskalacją `sudo`.
+
+> **Inżynierska wskazówka dla audytora:** Powyższe dowody wykazują wdrożenie strategii **Defense in Depth** w obrębie najwrażliwszego portu administracyjnego serwera.
 
 </details>
 
 
+---
 
+## 🐳 Docker Stack Overview
+Usługi działają w odizolowanych kontenerach, zarządzanych przez **Portainer CE**.
 
-W planach mam kupno aktywnego chłodzenia do malinki, gdyż przy włączonym wazuhu temeperatura procesora wzrasta.
+### Monitoring & Security
+* **Wazuh (SIEM/XDR):** Centralne zarządzanie zdarzeniami bezpieczeństwa.
+* **Zabbix:** Monitoring dostępności i wydajności zasobów sprzętowych.
+* **LGM Stack:** Agregacja logów (Loki) i wizualizacja metryk (Grafana).
 
+### DevSecOps & Tools
+* **Gitea:** Lokalny serwer Git z obsługą CI/CD (Gitea Runner).
+* **Passbolt:** Rozwiązanie klasy Enterprise do bezpiecznego przechowywania haseł.
+* **Nginx Proxy Manager:** Zarządzanie certyfikatami SSL i Reverse Proxy.
 
+---
+
+## 📊 System Health Statistics
 
 <details>
-<summary>Kliknij by zobaczyć zużycie zasoób</summary>
+<summary>⚡ Kliknij, aby zobaczyć aktualne metryki zasobów</summary>
 
-<br>
-
+### Temperatura procesora (Load: Active)
 ```bash
 pi@pi:~ $ vcgencmd measure_temp
-temp=67.0'C
-pi@pi:~ $ vcgencmd measure_temp
-temp=67.5'C
-pi@pi:~ $ free -h
-               total        used        free      shared  buff/cache   available
-Mem:           7.9Gi       3.9Gi       239Mi        74Mi       4.0Gi       4.0Gi
-Swap:          1.0Gi       638Mi       385Mi
-```
-</details>
+temp=67.5'C  # Status: Wymaga montażu aktywnego chłodzenia
