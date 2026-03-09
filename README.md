@@ -65,6 +65,52 @@ pi@pi:~ $
 ```
 Inżynierska wskazówka dla audytora: Powyższe dowody wykazują wdrożenie strategii Defense in Depth. Nawet przejęcie kontroli nad siecią lokalną nie pozwala na nieautoryzowany dostęp bez posiadania unikalnego klucza i znajomości hasła do jego odszyfrowania.
 
+ 🛡️ Phase 4: Active Incident Response & Monitoring (IPS)
+> W tej fazie projekt przeszedł z pasywnej ochrony (hardening) do aktywnej obrony. Zaimplementowano system **IPS (Intrusion Prevention System)**, który w czasie rzeczywistym analizuje próby naruszenia bezpieczeństwa i podejmuje autonomiczne działania obronne.
+
+ ⚙️ Kluczowe parametry systemu:
+* **Silnik detekcji:** Fail2Ban zintegrowany bezpośrednio z szyną zdarzeń `systemd`.
+* **Polityka agresywności:** Tryb `mode = extra` — monitorowanie nie tylko błędnych haseł, ale i odrzuconych prób negocjacji kluczy publicznych (preauth).
+* **Threshold (Próg):** Limit **5 nieudanych prób** w określonym czasie skutkuje natychmiastową blokadą adresu IP na firewallu.
+* **Integracja SMTP:** Wykorzystanie `msmtp` do przesyłania raportów o incydentach (Real-time Alerting).
+
+## 📄 Konfiguracja Strażnika (`/etc/fail2ban/jail.local`):
+```ini
+[sshd]
+enabled  = true
+port     = ssh
+backend  = systemd
+mode     = extra
+maxretry = 5
+bantime  = 1h
+ignoreip = 127.0.0.1/8 ::1 192.168.8.176  # Biała lista administratora
+action   = %(action_mwl)s[lines=20]       # Ban + Mail z raportem WHOIS i logami
+```
+<details>
+<summary>🔍 Audit: Dowody aktywnej obrony (Real-time Logs)</summary>
+
+
+Poniższe logi systemowe stanowią bezpośredni dowód na to, że system poprawnie wykrywa ataki, izoluje intruza i skutecznie raportuje zdarzenie.
+
+🛡️ Dowód 1: Wykrycie ataku i nałożenie blokady (Fail2Ban Log)
+Wycinek z /var/log/fail2ban.log pokazujący proces zliczania prób i finalny ban dla hosta 192.168.8.186.
+
+```Plaintext
+2026-03-09 20:11:16,792 fail2ban.filter : INFO [sshd] Found 192.168.8.186
+2026-03-09 20:11:18,034 fail2ban.filter : INFO [sshd] Found 192.168.8.186
+2026-03-09 20:11:19,386 fail2ban.actions: NOTICE [sshd] Ban 192.168.8.186
+```
+📩 Dowód 2: Skuteczna wysyłka alertu przez bramkę SMTP
+Logi z usługi msmtp potwierdzające, że serwer Gmail przyjął i przetworzył powiadomienie o incydencie (Status 250 OK).
+
+```Plaintext
+Mar 09 20:11:21 host=smtp.gmail.com tls=on auth=on user=rafal.ciereszko.2abt@gmail.com 
+recipients=rafal.important.information@gmail.com mailsize=3241 
+smtpstatus=250 smtpmsg='250 2.0.0 OK 1773083481 ... - gsmtp' exitcode=EX_OK
+```
+Wniosek inżynierski: Połączenie narzędzi Fail2Ban oraz msmtp tworzy niezawodną pętlę sprzężenia zwrotnego. Administrator jest informowany o ataku w ciągu < 3 sekund od jego wystąpienia, co skraca czas reakcji na incydent do minimum.
+
+
 </details>
 
 
