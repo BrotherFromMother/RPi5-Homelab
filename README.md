@@ -271,7 +271,7 @@ Połączenie narzędzi Fail2Ban oraz msmtp tworzy niezawodną pętlę sprzężen
 <details>
 <summary>
 
-### 2 Inwentarz Węzłów oraz Pełna Mapa Portów i Usług
+### 🔍2 Inwentarz Węzłów oraz Pełna Mapa Portów i Usług
 </summary>
 <br>
 
