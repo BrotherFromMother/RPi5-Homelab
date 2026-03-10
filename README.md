@@ -108,8 +108,11 @@ graph TD
 
 
 <details>
-<summary>  🛡️ Bezpieczne SSH  </summary>
- 
+<summary>
+    
+### 🛡️ Bezpieczne SSH
+
+</summary>
 
 <br>
 
@@ -265,9 +268,55 @@ Połączenie narzędzi Fail2Ban oraz msmtp tworzy niezawodną pętlę sprzężen
 </details>
 
 ***
+<details>
+<summary>
 
-### Kolejny rodział
+### 2 Inwentarz Węzłów oraz Pełna Mapa Portów i Usług
+</summary>
+<br>
 
+
+### 📋 Inwentarz Węzłów (Nodes)
+
+| Hostname | Lokalizacja | OS | Rola w systemie |
+| :--- | :--- | :--- | :--- |
+| **RPi5-Homelab** | Dom (Białystok) | Debian | Central Management, SIEM, Monitoring |
+| **Fedora-Node** | Laptop (Local) | Fedora | App Node, Workstation, Podman Runtime |
+| **Azure-VM** | Chmura (Azure) | Linux | Reverse Proxy (NPM), Cloud Storage |
+| **GCP-Node** | Chmura (GCP) | Linux | Backup Node, External Health-Check |
+
+### 🔍 Pełna Mapa Portów i Usług (Service Blueprint)
+Inwentaryzacja usług na podstawie aktywnego nasłuchu procesów (netstat).
+
+| Port | Usługa / Proces | Warstwa | Zastosowanie |
+| :--- | :--- | :--- | :--- |
+| **3000** | Grafana | Obserwowalność | Centralne dashboardy i wizualizacja danych. |
+| **9090** | Prometheus | Obserwowalność | Baza danych metryk (Time-series database). |
+| **9100** | Node Exporter | Obserwowalność | Metryki sprzętowe hosta dla Prometheusa. |
+| **3100** | Loki | Obserwowalność | Agregacja i przeszukiwanie logów systemowych. |
+| **8080 / 10051** | Zabbix Web/Server | Obserwowalność | Monitoring dostępności i wydajności maszyn. |
+| **10050** | Zabbix Agent | Obserwowalność | Lokalny monitoring zasobów RPi5. |
+| **8000 / 9200** | Wazuh UI / Indexer | Bezpieczeństwo | Panel SIEM oraz silnik indeksowania zdarzeń. |
+| **1514 / 1515** | Wazuh Manager | Bezpieczeństwo | Komunikacja i rejestracja agentów SIEM. |
+| **55000** | Wazuh API | Bezpieczeństwo | API do zarządzania infrastrukturą bezpieczeństwa. |
+| **8081** | Passbolt | Bezpieczeństwo | Menedżer haseł klasy enterprise (szyfrowanie GPG). |
+| **514 / UDP** | Syslog Server | Bezpieczeństwo | Odbieranie logów z urządzeń sieciowych. |
+| **3001 / 2222** | Gitea (HTTP/SSH) | DevOps | Prywatne repozytoria kodu (Self-hosted Git). |
+| **443** | Nginx Proxy Manager | Sieć | Publiczna brama (Gateway) z obsługą SSL. |
+| **8083 / 8084** | NPM Admin / UI | Sieć | Panele administracyjne infrastruktury Reverse Proxy. |
+| **9443** | Portainer (HTTPS) | Zarządzanie | Graficzne zarządzanie flotą kontenerów Docker. |
+| **8082** | Filebrowser | Pliki | Webowy dostęp do systemu plików Homelaba. |
+| **22** | OpenSSH | Dostęp | Dostęp terminalowy (Hardened SSH). |
+| **5900** | WayVNC | Dostęp | Zdalny pulpit środowiska graficznego. |
+| **41641 / UDP** | Tailscale | Sieć | Komunikacja w prywatnej sieci Mesh VPN. |
+| **51820 / UDP** | WireGuard | Sieć | Zapasowy tunel VPN dla dostępu z zewnątrz. |
+| **5353 / UDP** | Avahi (mDNS) | Sieć | Rozwiązywanie lokalnych nazw hostów w podsieci. |
+| **7575** | Bazarr | Media | Zarządzanie napisami do multimediów. |
+| **3002** | Custom Dashboard | Zarządzanie | Lekki dashboard startowy dla użytkownika. |
+
+</details>
 
 ***
+### Kolejny rozdział 
 
+***
