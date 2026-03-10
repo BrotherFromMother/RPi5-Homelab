@@ -1,111 +1,39 @@
-# Hybrid Infrastructure Homelab Project
+## 🌐 Phase 5: Distributed Infrastructure Inventory & Network Mesh
 
-![Project Status](https://img.shields.io/badge/status-active-success.svg)
-![Environment](https://img.shields.io/badge/environment-hybrid%20cloud-blue.svg)
+> "Single Pane of Glass" – zarządzanie rozproszoną infrastrukturą z jednego punktu, zachowując pełną izolację od publicznego internetu.
 
-Profesjonalne laboratorium inżynierskie oparte na architekturze hybrydowej, łączące zasoby on-premise (Raspberry Pi 5) z chmurą publiczną (Azure, GCP). Projekt służy do symulacji, wdrażania i testowania rozwiązań klasy enterprise w skalowalnym i bezpiecznym środowisku.
+Kluczowym elementem projektu jest wykorzystanie **Tailscale (Mesh VPN)**. Dzięki temu wszystkie węzły (On-premise i Cloud) komunikują się wewnątrz prywatnej warstwy 100.x.x.x. Porty usług są otwarte wyłącznie na interfejsach VPN, co drastycznie zmniejsza powierzchnię ataku.
 
-## 👨‍💻 O mnie
+### 📋 Inwentarz Węzłów (Nodes)
 
-Jestem studentem ostatniego semestru Informatyki i pracującym Junior System Administratorem. Moja pasja to budowanie bezpiecznej i zautomatyzowanej infrastruktury IT. Ten projekt to mój poligon doświadczalny, gdzie wiedzę akademicką zamieniam na praktyczne wdrożenia technologii używanych w nowoczesnych środowiskach komercyjnych.
+| Hostname | Lokalizacja | Adres IP (Tailscale) | Rola w systemie |
+| :--- | :--- | :--- | :--- |
+| **RPi5-Homelab** | Dom (Białystok) | `100.73.36.110` | Central Management, Zabbix Server, Wazuh Manager |
+| **Fedora-Node** | Laptop (Local) | `100.72.53.112` | App Node, Podman Runtime, Workstation |
+| **Azure-VM** | Chmura (Azure) | `100.x.x.x` | Reverse Proxy (NPM), Cloud Monitoring |
+| **GCP-Node** | Chmura (GCP) | `100.x.x.x` | Backup Node, External Health-Check |
 
-## 🛠️ Tech Stack
 
-### Infrastruktura & Chmura
-![Raspberry Pi](https://img.shields.io/badge/-RaspberryPi-C51A4A?style=for-the-badge&logo=Raspberry-Pi)
-![Microsoft Azure](https://img.shields.io/badge/azure-%230072C6.svg?style=for-the-badge&logo=microsoftazure&logoColor=white)
-![Google Cloud](https://img.shields.io/badge/GoogleCloud-%234285F4.svg?style=for-the-badge&logo=google-cloud&logoColor=white)
+### 🔍 Porty i Usługi (Full Service Blueprint)
 
-### Wirtualizacja & Orkiestracja
-![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
-![Portainer](https://img.shields.io/badge/Portainer-13BEF9?style=for-the-badge&logo=Portainer&logoColor=white)
-![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
+Poniższa tabela przedstawia pełną inwentaryzację usług działających na węźle centralnym (RPi5). Każda usługa została przypisana do konkretnej warstwy funkcjonalnej.
 
-### Sieci & Bezpieczeństwo
-![Tailscale](https://img.shields.io/badge/Tailscale-FFFFFF?style=for-the-badge&logo=Tailscale&logoColor=black)
-![Nginx Proxy Manager](https://img.shields.io/badge/Nginx-009639?style=for-the-badge&logo=nginx&logoColor=white)
-![Wazuh](https://img.shields.io/badge/Wazuh-00A8E6?style=for-the-badge&logo=Wazuh&logoColor=white)
-![Passbolt](https://img.shields.io/badge/Passbolt-E22A56?style=for-the-badge&logo=Passbolt&logoColor=white)
+| Port | Usługa / Proces | Warstwa | Zastosowanie |
+| :--- | :--- | :--- | :--- |
+| **8080** | Zabbix Web | **Obserwowalność** | Panel zarządzania i wizualizacji metryk. |
+| **10051** | Zabbix Server | **Obserwowalność** | Główny silnik zbierający dane od agentów (TCP). |
+| **10050** | Zabbix Agent | **Obserwowalność** | Monitorowanie parametrów lokalnych Malinki. |
+| **9443** | Portainer (HTTPS) | **Zarządzanie** | Graficzny interfejs do zarządzania flotą kontenerów. |
+| **8081** | Passbolt (App) | **Bezpieczeństwo** | System zarządzania hasłami klasy enterprise. |
+| **8082** | Filebrowser | **Pliki** | Webowy menedżer plików (dostęp do zasobów labu). |
+| **8000** | Wazuh Dashboard | **Bezpieczeństwo** | Panel analityczny zdarzeń bezpieczeństwa (SIEM). |
+| **22** | OpenSSH | **Dostęp** | Bezpieczny dostęp terminalowy (Klucze Ed25519). |
+| **5900** | WayVNC | **Dostęp** | Zdalny pulpit (VNC) dla środowiska graficznego. |
+| **7575** | Bazarr / App | **Media/Inne** | Automatyzacja pobierania napisów (Node.js). |
+| **3002** | Custom Dashboard | **Zarządzanie** | Dodatkowy panel pomocniczy dla usług labu. |
+| **41641 / UDP** | Tailscale | **Sieć** | Komunikacja wewnątrz prywatnej sieci Mesh VPN. |
+| **5353 / UDP** | Avahi | **Sieć** | Rozwiązywanie nazw lokalnych (mDNS/pi.local). |
 
-### Obserwowalność (Monitoring)
-![Zabbix](https://img.shields.io/badge/Zabbix-D40000?style=for-the-badge&logo=Zabbix&logoColor=white)
-![Grafana](https://img.shields.io/badge/grafana-%23F46800.svg?style=for-the-badge&logo=grafana&logoColor=white)
-![Prometheus](https://img.shields.io/badge/Prometheus-E6522C?style=for-the-badge&logo=Prometheus&logoColor=white)
+> **Nota dot. Bezpieczeństwa:** Usługi takie jak CUPS (port 631) są celowo ograniczone do interfejsu `127.0.0.1`, co uniemożliwia dostęp do nich spoza samej Malinki.
 
 ---
-
-## 🏗️ Architektura i Komunikacja
-
-Poniższy diagram przedstawia przepływ ruchu sieciowego oraz logiczną separację warstw w modelu hybrydowym.
-
-```mermaid
-graph TD
-    %% Definicje stylów dla lepszej czytelności
-    classDef cloud fill:#e3f2fd,stroke:#1565c0,stroke-width:2px;
-    classDef onprem fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px;
-    classDef vpn fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px,stroke-dasharray: 5 5;
-    classDef storage fill:#fff3e0,stroke:#e65100,stroke-width:2px;
-
-    Internet((🌐 Public Internet\npi-passbolt-rc.duckdns.org))
-
-    subgraph Tailscale[🔐 Tailscale Mesh VPN Network]
-        direction TB
-
-        subgraph Clients[💻 Client Devices]
-            Admin[Admin Laptop / Mobile]
-        end
-
-        subgraph Azure[☁️ Azure VM 2Core 1GB RAM]
-            NPM[Nginx Proxy Manager\nSecure Gateway]
-            AzAgents[Zabbix & Wazuh Agents]
-            AzPA[Portainer Agent]
-        end
-
-        subgraph GCP[☁️ Google Cloud 2Core 1GB RAM]
-            GCPAgents[Zabbix & Wazuh Agents]
-            GCPPA[Portainer Agent]
-        end
-
-        subgraph Local[🏠 Raspberry Pi 5 8GB RAM]
-            Portainer[Portainer Central]
-            Passbolt[(Passbolt DB)]
-            Zabbix[Zabbix Server]
-            Wazuh[Wazuh Manager]
-        end
-    end
-
-    subgraph AzureStorage[🗄️ Cloud Storage]
-        SMB[(Azure File Share 100GB)]
-    end
-
-    %% Ruch użytkownika do Passbolta (Zewnętrzny)
-    Admin -- "1. DNS Resolution\n2. HTTPS Request" --> Internet
-    Internet -->|HTTPS :444| NPM
-
-    %% Ruch wewnętrzny przez Proxy
-    NPM -->|Reverse Proxy via VPN :8081| Passbolt
-
-    %% Dostęp administracyjny (Wewnętrzny VPN)
-    Admin -.->|HTTPS :9443| Portainer
-    Admin -.->|HTTP :8080| Zabbix
-    Admin -.->|HTTPS :443| Wazuh
-
-    %% Centralne zarządzanie Portainerem
-    Portainer -->|TCP :9001| AzPA
-    Portainer -->|TCP :9001| GCPPA
-
-    %% Przepływ logów i telemetrii
-    AzAgents -->|TCP :10051| Zabbix
-    AzAgents -->|TCP :1514 / :1515| Wazuh
-    GCPAgents -->|TCP :10051| Zabbix
-    GCPAgents -->|TCP :1514 / :1515| Wazuh
-
-    %% Montowanie dysków sieciowych
-    SMB <-->|SMB :445| Local
-    SMB <-->|SMB :445| Azure
-
-    %% Aplikacja stylów
-    class Azure,GCP cloud;
-    class Local onprem;
-    class Tailscale vpn;
-    class SMB storage;
