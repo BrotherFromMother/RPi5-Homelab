@@ -1,0 +1,19 @@
+services:
+  samba-ad:
+    image: instantlinux/samba-dc:latest
+    container_name: local-ad-controller
+    network_mode: host
+    cap_add:
+      - SYS_ADMIN
+    environment:
+      - DOMAIN_ACTION=provision
+      - REALM=HOMELAB.LOCAL
+      - DOMAIN=HOMELAB
+      - ADMIN_PASSWORD_SECRET=admin_password # Nazwa pliku wewnątrz /run/secrets/
+    volumes:
+      - ./data:/var/lib/samba
+      - ./config:/etc/samba
+      - ./secrets/admin_password:/run/secrets/admin_password:ro # Mapujemy nasz plik tutaj
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    restart: always

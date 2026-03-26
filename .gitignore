@@ -1,0 +1,9 @@
+# Ignoruj dane systemowe AD (te od roota)
+infrastructure/data/
+infrastructure/config/
+
+# Ignoruj hasła
+infrastructure/secrets/
+
+# Ignoruj pliki tymczasowe
+*.log
