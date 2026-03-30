@@ -2,18 +2,34 @@ services:
   samba-ad:
     image: instantlinux/samba-dc:latest
     container_name: local-ad-controller
-    network_mode: host
+    hostname: dc1
+    # USUNIĘTO: network_mode: host
     cap_add:
       - SYS_ADMIN
     environment:
       - DOMAIN_ACTION=provision
-      - REALM=HOMELAB.LOCAL
+      - REALM=homelab.local
       - DOMAIN=HOMELAB
-      - ADMIN_PASSWORD_SECRET=admin_password # Nazwa pliku wewnątrz /run/secrets/
+      - ADMIN_PASSWORD_SECRET=admin_password
     volumes:
-      - ./data:/var/lib/samba
-      - ./config:/etc/samba
-      - ./secrets/admin_password:/run/secrets/admin_password:ro # Mapujemy nasz plik tutaj
+      - /home/pi/Git/RPi5-Homelab/infrastructure/data:/var/lib/samba
+      - /home/pi/Git/RPi5-Homelab/infrastructure/config:/etc/samba
+      - /home/pi/Git/RPi5-Homelab/infrastructure/secrets/admin_password:/run/secrets/admin_password:ro
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
     restart: always
+    networks:
+      macvlan_samba:
+        ipv4_address: 192.168.8.200 # Nowy, własny adres IP dla AD
+
+# Definicja sieci Macvlan podpiętej pod fizyczną kartę Malinki (eth0)
+networks:
+  macvlan_samba:
+    driver: macvlan
+    driver_opts:
+      parent: eth0
+    ipam:
+      config:
+        - subnet: 192.168.8.0/24
+          gateway: 192.168.8.1
+          ip_range: 192.168.8.200/32 # Rezerwacja tylko tego jednego IP dla Dockera
