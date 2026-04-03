@@ -3,7 +3,6 @@ services:
     image: instantlinux/samba-dc:latest
     container_name: local-ad-controller
     hostname: dc1
-    # USUNIĘTO: network_mode: host
     cap_add:
       - SYS_ADMIN
     environment:
@@ -20,9 +19,21 @@ services:
     restart: always
     networks:
       macvlan_samba:
-        ipv4_address: 192.168.8.200 # Nowy, własny adres IP dla AD
+        ipv4_address: 192.168.8.200
 
-# Definicja sieci Macvlan podpiętej pod fizyczną kartę Malinki (eth0)
+  radius:
+    image: freeradius/freeradius-server:latest
+    container_name: freeradius-server
+    restart: always
+    volumes:
+      - /home/pi/Git/RPi5-Homelab/infrastructure/config/radius/clients.conf:/etc/raddb/clients.conf:ro
+      - /home/pi/Git/RPi5-Homelab/infrastructure/data:/var/lib/samba
+    networks:
+      macvlan_samba:
+        ipv4_address: 192.168.8.201
+    depends_on:
+      - samba-ad
+
 networks:
   macvlan_samba:
     driver: macvlan
@@ -32,4 +43,4 @@ networks:
       config:
         - subnet: 192.168.8.0/24
           gateway: 192.168.8.1
-          ip_range: 192.168.8.200/32 # Rezerwacja tylko tego jednego IP dla Dockera
+          ip_range: 192.168.8.200/31
