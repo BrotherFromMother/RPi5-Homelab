@@ -26,14 +26,10 @@
         project_src: "/home/pi/Git/RPi5-Homelab/docker/{{ item }}"
         state: present
       loop:
-        - npm
         - samba-ad
         - radius
         - zabbix
         - homarr
-        - dashdot
-        - gitea
-        - gitea-runner
         - passbolt
 
     - name: Czyszczenie nieuzywanych obrazow Docker
