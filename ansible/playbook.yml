@@ -1,32 +1,43 @@
 ---
-- name: Orkiestracja Raspberry Pi 5 - Homelab
+- name: Konfiguracja i Orkiestracja Raspberry Pi 5
   hosts: rpi5
   become: yes
 
   tasks:
-    - name: Uruchom Infrastrukture Bazowa (Samba AD, NPM, Radius)
-      community.docker.docker_compose_v2:
-        project_src: "/home/pi/Git/RPi5-Homelab/docker/{{ item }}"
-        state: present
-      loop:
-        - samba-ad
-        - npm
-        - radius
+    - name: System update i upgrade
+      apt:
+        update_cache: yes
+        upgrade: dist
 
-    - name: Uruchom Monitoring i Dashboard (Zabbix, Homarr, Dashdot)
+    - name: Instalacja bibliotek Pythona dla Dockera
+      apt:
+        name:
+          - python3-pip
+          - python3-docker
+        state: present
+
+    - name: Stworz siec homelab_network
+      docker_network:
+        name: homelab_network
+        state: present
+
+    - name: Wdrozenie uslug Docker Compose
       community.docker.docker_compose_v2:
         project_src: "/home/pi/Git/RPi5-Homelab/docker/{{ item }}"
         state: present
       loop:
+        - npm
+        - samba-ad
+        - radius
         - zabbix
         - homarr
         - dashdot
-
-    - name: Uruchom Git i Passbolt
-      community.docker.docker_compose_v2:
-        project_src: "/home/pi/Git/RPi5-Homelab/docker/{{ item }}"
-        state: present
-      loop:
         - gitea
         - gitea-runner
         - passbolt
+
+    - name: Czyszczenie nieuzywanych obrazow Docker
+      docker_prune:
+        images: yes
+        images_filters:
+          dangling: false

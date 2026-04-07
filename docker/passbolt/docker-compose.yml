@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  db:
+    image: mariadb:10.11
+    container_name: passbolt-db
+    restart: always
+    environment:
+      - MYSQL_DATABASE=passbolt
+      - MYSQL_USER=passbolt
+      - MYSQL_PASSWORD=HasloBazy_2026_RPi5!
+      - MYSQL_ROOT_PASSWORD=HasloRoota_2026_RPi5!
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+    networks:
+      - homelab_network
+
+  passbolt:
+    image: passbolt/passbolt:latest-ce
+    container_name: passbolt-app
+    restart: always
+    environment:
+      - APP_FULL_BASE_URL=https://pi-passbolt-rc.duckdns.org:444
+      - DATASOURCES_DEFAULT_HOST=db
+      - DATASOURCES_DEFAULT_USERNAME=passbolt
+      - DATASOURCES_DEFAULT_PASSWORD=HasloBazy_2026_RPi5!
+      - DATASOURCES_DEFAULT_DATABASE=passbolt
+    volumes:
+      - ./data/gpg:/etc/passbolt/gpg
+      - ./data/jwt:/etc/passbolt/jwt
+      - ./data/public:/var/www/passbolt/webroot/img/public
+    ports:
+      - "8081:80"
+    depends_on:
+      - db
+    networks:
+      - homelab_network
+
+networks:
+  homelab_network:
+    external: true

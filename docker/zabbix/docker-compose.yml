@@ -1,0 +1,78 @@
+version: '3.8'
+
+services:
+  zbx-mysql:
+    image: mariadb:10.5
+    container_name: zbx-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ZabbixBezpieczne2024!
+      MYSQL_DATABASE: zabbix
+      MYSQL_USER: zabbix
+      MYSQL_PASSWORD: ZabbixBezpieczne2024!
+    volumes:
+      - ./data/db:/var/lib/mysql
+    networks:
+      zabbix-internal:
+        ipv4_address: 172.16.10.2
+
+  zbx-server:
+    image: zabbix/zabbix-server-mysql:ubuntu-7.0-latest
+    container_name: zbx-server
+    restart: unless-stopped
+    ports:
+      - "10051:10051"
+    environment:
+      DB_SERVER_HOST: zbx-mysql
+      MYSQL_DATABASE: zabbix
+      MYSQL_USER: zabbix
+      MYSQL_PASSWORD: ZabbixBezpieczne2024!
+    depends_on:
+      - zbx-mysql
+    networks:
+      zabbix-internal:
+        ipv4_address: 172.16.10.3
+      homelab_network:
+
+  zbx-web:
+    image: zabbix/zabbix-web-nginx-mysql:ubuntu-7.0-latest
+    container_name: zbx-web
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      DB_SERVER_HOST: zbx-mysql
+      MYSQL_DATABASE: zabbix
+      MYSQL_USER: zabbix
+      MYSQL_PASSWORD: ZabbixBezpieczne2024!
+      ZBX_SERVER_HOST: zbx-server
+      PHP_TZ: Europe/Warsaw
+    depends_on:
+      - zbx-server
+    networks:
+      zabbix-internal:
+        ipv4_address: 172.16.10.4
+      homelab_network:
+
+  zbx-agent:
+    image: zabbix/zabbix-agent:ubuntu-7.0-latest
+    container_name: zbx-agent
+    restart: unless-stopped
+    environment:
+      ZBX_SERVER_HOST: zbx-server
+      ZBX_HOSTNAME: RPi5-Master-Agent
+      ZBX_PASSIVESERVERS: 172.16.10.3
+    depends_on:
+      - zbx-server
+    networks:
+      zabbix-internal:
+        ipv4_address: 172.16.10.5
+
+networks:
+  zabbix-internal:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.16.10.0/24
+  homelab_network:
+    external: true
