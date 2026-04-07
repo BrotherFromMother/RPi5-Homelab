@@ -1,0 +1,32 @@
+---
+- name: Orkiestracja Raspberry Pi 5 - Homelab
+  hosts: rpi5
+  become: yes
+
+  tasks:
+    - name: Uruchom Infrastrukture Bazowa (Samba AD, NPM, Radius)
+      community.docker.docker_compose_v2:
+        project_src: "/home/pi/Git/RPi5-Homelab/docker/{{ item }}"
+        state: present
+      loop:
+        - samba-ad
+        - npm
+        - radius
+
+    - name: Uruchom Monitoring i Dashboard (Zabbix, Homarr, Dashdot)
+      community.docker.docker_compose_v2:
+        project_src: "/home/pi/Git/RPi5-Homelab/docker/{{ item }}"
+        state: present
+      loop:
+        - zabbix
+        - homarr
+        - dashdot
+
+    - name: Uruchom Git i Passbolt
+      community.docker.docker_compose_v2:
+        project_src: "/home/pi/Git/RPi5-Homelab/docker/{{ item }}"
+        state: present
+      loop:
+        - gitea
+        - gitea-runner
+        - passbolt

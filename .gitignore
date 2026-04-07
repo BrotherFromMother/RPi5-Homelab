@@ -1,9 +1,19 @@
-# Ignoruj dane systemowe AD (te od roota)
-infrastructure/data/
-infrastructure/config/
+# Dane kontenerów 
+**/data/
+**/db/
+**/database/
+**/postgres/
+**/mysql/
+**/secrets/
+**/letsencrypt/
+**/config/
+**/configs/
+**/icons/
 
-# Ignoruj hasła
-infrastructure/secrets/
-
-# Ignoruj pliki tymczasowe
+# Logi i pliki tymczasowe 
 *.log
+*.tmp
+*.swp
+.DS_Store
+ansible/*.retry
+

@@ -1,0 +1,34 @@
+services:
+  samba-ad:
+    image: instantlinux/samba-dc:latest
+    container_name: local-ad-controller
+    hostname: dc1
+    cap_add:
+      - SYS_ADMIN
+    environment:
+      - DOMAIN_ACTION=provision
+      - REALM=homelab.local
+      - DOMAIN=HOMELAB
+      - ADMIN_PASSWORD_SECRET=admin_password
+    volumes:
+      - ./data:/var/lib/samba
+      - ./config:/etc/samba
+      - ./secrets/admin_password:/run/secrets/admin_password:ro
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    restart: always
+    networks:
+      macvlan_net:
+        ipv4_address: 192.168.8.200
+
+networks:
+  macvlan_net:
+    name: homelab_macvlan # Nazwa sieci widoczna w systemie
+    driver: macvlan
+    driver_opts:
+      parent: eth0
+    ipam:
+      config:
+        - subnet: 192.168.8.0/24
+          gateway: 192.168.8.1
+          ip_range: 192.168.8.200/30 # Rezerwacja zakresu dla obu usług
