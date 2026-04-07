@@ -1,19 +1,23 @@
-# Dane kontenerów 
-**/data/
-**/db/
-**/database/
-**/postgres/
-**/mysql/
-**/secrets/
-**/letsencrypt/
-**/config/
-**/configs/
-**/icons/
+# Docker Data Folders (Ignore everything inside data/db folders)
+docker/*/data/
+docker/*/db/
+docker/*/gitea-data/
+docker/*/gitea-db/
+docker/*/gitea-tailscale-state/
+docker/*/secrets/
+docker/*/letsencrypt/
 
-# Logi i pliki tymczasowe 
+# Passbolt specific
+docker/passbolt/data/
+
+# Zabbix specific
+docker/zabbix/data/
+
+# Samba AD specific
+docker/samba-ad/data/
+docker/samba-ad/config/
+
+# OS/System garbage
+.DS_Store
 *.log
 *.tmp
-*.swp
-.DS_Store
-ansible/*.retry
-

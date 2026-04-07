@@ -21,16 +21,25 @@
         name: homelab_network
         state: present
 
+    - name: Ustaw uprawnienia dla folderu danych Passbolt (UID 33 = www-data)
+      ansible.builtin.file:
+        path: "/home/pi/Git/RPi5-Homelab/docker/passbolt/data"
+        owner: "33"
+        group: "33"
+        mode: "0775"
+        recurse: yes
+        state: directory
+
     - name: Wdrozenie uslug Docker Compose
       community.docker.docker_compose_v2:
         project_src: "/home/pi/Git/RPi5-Homelab/docker/{{ item }}"
         state: present
       loop:
         - samba-ad
-        - radius
+   #     - radius
         - zabbix
         - homarr
-        - passbolt
+    #    - passbolt
 
     - name: Czyszczenie nieuzywanych obrazow Docker
       docker_prune:
