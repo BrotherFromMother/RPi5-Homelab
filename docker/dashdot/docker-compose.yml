@@ -1,0 +1,13 @@
+services:
+  dashdot:
+    image: mauricenino/dashdot:latest
+    container_name: dashdot
+    restart: unless-stopped
+    privileged: true
+    ports:
+      - '3002:3001'
+    volumes:
+      - /:/mnt/host:ro
+    environment:
+      - DASHDOT_ENABLE_CPU_TEMPS=true
+      - DASHDOT_WIDGET_LIST=cpu,storage,ram,network

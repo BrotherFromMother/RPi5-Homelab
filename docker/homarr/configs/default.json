@@ -12,29 +12,30 @@
   ],
   "apps": [
     {
-      "id": "5df743d9-5cb1-457c-85d2-64ff86855652",
-      "name": "Documentation",
-      "url": "https://homarr.dev",
-      "behaviour": {
-        "onClickUrl": "https://homarr.dev",
-        "externalUrl": "https://homarr.dev",
-        "isOpeningNewTab": true
-      },
-      "network": {
-        "enabledStatusChecker": false,
-        "statusCodes": [
-          "200"
-        ]
-      },
+      "id": "38fd903a-644a-474c-bfe8-1ac12e04cffe",
+      "name": "Zabbix",
+      "url": "http://100.82.163.48:8080",
       "appearance": {
-        "iconUrl": "/imgs/logo/logo.png",
+        "iconUrl": "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/zabbix.svg",
         "appNameStatus": "normal",
         "positionAppName": "column",
-        "lineClampAppName": 1
+        "lineClampAppName": 1,
+        "appNameFontSize": 16
       },
-      "integration": {
-        "type": null,
-        "properties": []
+      "network": {
+        "enabledStatusChecker": true,
+        "statusCodes": [
+          "200",
+          "301",
+          "302",
+          "304",
+          "307",
+          "308"
+        ]
+      },
+      "behaviour": {
+        "isOpeningNewTab": true,
+        "externalUrl": "http://100.82.163.48:8080/"
       },
       "area": {
         "type": "wrapper",
@@ -43,10 +44,227 @@
         }
       },
       "shape": {
+        "lg": {
+          "location": {
+            "x": 3,
+            "y": 3
+          },
+          "size": {
+            "width": 1,
+            "height": 1
+          }
+        },
         "md": {
           "location": {
-            "x": 5,
+            "x": 2,
+            "y": 4
+          },
+          "size": {
+            "width": 1,
+            "height": 1
+          }
+        },
+        "sm": {
+          "location": {
+            "x": 2,
             "y": 1
+          },
+          "size": {
+            "width": 1,
+            "height": 1
+          }
+        }
+      },
+      "integration": {
+        "type": null,
+        "properties": []
+      }
+    },
+    {
+      "id": "1c816a2e-399a-4a42-b899-f205ab9f04f4",
+      "name": "HomeLab",
+      "url": "https://github.com/BrotherFromMother/RPi5-Homelab/tree/BrotherFromMother-patch-1",
+      "appearance": {
+        "iconUrl": "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/github.svg",
+        "appNameStatus": "normal",
+        "positionAppName": "column",
+        "lineClampAppName": 1,
+        "appNameFontSize": 16
+      },
+      "network": {
+        "enabledStatusChecker": true,
+        "statusCodes": [
+          "200",
+          "301",
+          "302",
+          "304",
+          "307",
+          "308"
+        ]
+      },
+      "behaviour": {
+        "isOpeningNewTab": true,
+        "externalUrl": "https://github.com/BrotherFromMother/RPi5-Homelab/tree/BrotherFromMother-patch-1"
+      },
+      "area": {
+        "type": "wrapper",
+        "properties": {
+          "id": "default"
+        }
+      },
+      "shape": {
+        "lg": {
+          "location": {
+            "x": 1,
+            "y": 3
+          },
+          "size": {
+            "width": 1,
+            "height": 1
+          }
+        },
+        "md": {
+          "location": {
+            "x": 0,
+            "y": 4
+          },
+          "size": {
+            "width": 1,
+            "height": 1
+          }
+        },
+        "sm": {
+          "location": {
+            "x": 2,
+            "y": 0
+          },
+          "size": {
+            "width": 1,
+            "height": 1
+          }
+        }
+      },
+      "integration": {
+        "type": null,
+        "properties": []
+      }
+    },
+    {
+      "id": "f192918a-ce23-4505-96e4-5ddb9cb4f418",
+      "name": "Portainer",
+      "url": "https://100.82.163.48:9443",
+      "appearance": {
+        "iconUrl": "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/portainer-alt.svg",
+        "appNameStatus": "normal",
+        "positionAppName": "column",
+        "lineClampAppName": 1,
+        "appNameFontSize": 16
+      },
+      "network": {
+        "enabledStatusChecker": true,
+        "statusCodes": [
+          "200",
+          "301",
+          "302",
+          "304",
+          "307",
+          "308"
+        ]
+      },
+      "behaviour": {
+        "isOpeningNewTab": true,
+        "externalUrl": "https://100.82.163.48:9443/"
+      },
+      "area": {
+        "type": "wrapper",
+        "properties": {
+          "id": "default"
+        }
+      },
+      "shape": {
+        "lg": {
+          "location": {
+            "x": 2,
+            "y": 3
+          },
+          "size": {
+            "width": 1,
+            "height": 1
+          }
+        },
+        "md": {
+          "location": {
+            "x": 3,
+            "y": 0
+          },
+          "size": {
+            "width": 1,
+            "height": 1
+          }
+        },
+        "sm": {
+          "location": {
+            "x": 2,
+            "y": 3
+          },
+          "size": {
+            "width": 1,
+            "height": 1
+          }
+        }
+      },
+      "integration": {
+        "type": null,
+        "properties": []
+      }
+    },
+    {
+      "id": "2e66dd7b-d57c-4a40-b6ae-28d9ae475d89",
+      "name": "Google VM",
+      "url": "https://console.cloud.google.com/compute/instances?project=project-c2e9ba59-d838-4937-b53",
+      "appearance": {
+        "iconUrl": "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/google-admin.svg",
+        "appNameStatus": "normal",
+        "positionAppName": "column",
+        "lineClampAppName": 1,
+        "appNameFontSize": 16
+      },
+      "network": {
+        "enabledStatusChecker": true,
+        "statusCodes": [
+          "200",
+          "301",
+          "302",
+          "304",
+          "307",
+          "308"
+        ]
+      },
+      "behaviour": {
+        "isOpeningNewTab": true,
+        "externalUrl": "https://console.cloud.google.com/compute/instances?project=project-c2e9ba59-d838-4937-b53"
+      },
+      "area": {
+        "type": "wrapper",
+        "properties": {
+          "id": "default"
+        }
+      },
+      "shape": {
+        "lg": {
+          "location": {
+            "x": 5,
+            "y": 3
+          },
+          "size": {
+            "width": 1,
+            "height": 1
+          }
+        },
+        "md": {
+          "location": {
+            "x": 0,
+            "y": 9
           },
           "size": {
             "width": 1,
@@ -56,50 +274,44 @@
         "sm": {
           "location": {
             "x": 0,
-            "y": 1
+            "y": 0
           },
           "size": {
             "width": 1,
-            "height": 2
-          }
-        },
-        "lg": {
-          "location": {
-            "x": 6,
-            "y": 1
-          },
-          "size": {
-            "width": 2,
-            "height": 2
+            "height": 1
           }
         }
-      }
-    },
-    {
-      "id": "47af36c0-47c1-4e5b-bfc7-ad645ee6a337",
-      "name": "Discord",
-      "url": "https://discord.com/invite/aCsmEV5RgA",
-      "behaviour": {
-        "onClickUrl": "https://discord.com/invite/aCsmEV5RgA",
-        "isOpeningNewTab": true,
-        "externalUrl": "https://discord.com/invite/aCsmEV5RgA",
-        "tooltipDescription": "Join our Discord server! We're waiting for your ideas and feedback. "
-      },
-      "network": {
-        "enabledStatusChecker": false,
-        "statusCodes": [
-          "200"
-        ]
-      },
-      "appearance": {
-        "iconUrl": "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons@master/png/discord.png",
-        "appNameStatus": "normal",
-        "positionAppName": "row-reverse",
-        "lineClampAppName": 1
       },
       "integration": {
         "type": null,
         "properties": []
+      }
+    },
+    {
+      "id": "d23ac4ae-020c-4e0e-9757-fe61c6c88370",
+      "name": "Gmail Radek",
+      "url": "https://mail.google.com/mail/u/0/#inbox",
+      "appearance": {
+        "iconUrl": "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/gmail.svg",
+        "appNameStatus": "normal",
+        "positionAppName": "column",
+        "lineClampAppName": 1,
+        "appNameFontSize": 16
+      },
+      "network": {
+        "enabledStatusChecker": true,
+        "statusCodes": [
+          "200",
+          "301",
+          "302",
+          "304",
+          "307",
+          "308"
+        ]
+      },
+      "behaviour": {
+        "isOpeningNewTab": true,
+        "externalUrl": "https://mail.google.com/mail/u/0/#inbox"
       },
       "area": {
         "type": "wrapper",
@@ -108,17 +320,56 @@
         }
       },
       "shape": {
-        "md": {
+        "lg": {
           "location": {
-            "x": 3,
-            "y": 1
+            "x": 6,
+            "y": 3
           },
           "size": {
             "width": 1,
             "height": 1
           }
-        },
-        "sm": {
+        }
+      },
+      "integration": {
+        "type": null,
+        "properties": []
+      }
+    },
+    {
+      "id": "6d0799e8-ea97-44e5-86e8-aac28b42b154",
+      "name": "Wazuh",
+      "url": "https://100.82.163.48",
+      "appearance": {
+        "iconUrl": "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/wazuh.svg",
+        "appNameStatus": "normal",
+        "positionAppName": "column",
+        "lineClampAppName": 1,
+        "appNameFontSize": 16
+      },
+      "network": {
+        "enabledStatusChecker": true,
+        "statusCodes": [
+          "200",
+          "301",
+          "302",
+          "304",
+          "307",
+          "308"
+        ]
+      },
+      "behaviour": {
+        "isOpeningNewTab": true,
+        "externalUrl": "https://100.82.163.48/"
+      },
+      "area": {
+        "type": "wrapper",
+        "properties": {
+          "id": "default"
+        }
+      },
+      "shape": {
+        "lg": {
           "location": {
             "x": 1,
             "y": 4
@@ -128,56 +379,13 @@
             "height": 1
           }
         },
-        "lg": {
-          "location": {
-            "x": 4,
-            "y": 0
-          },
-          "size": {
-            "width": 2,
-            "height": 1
-          }
-        }
-      }
-    },
-    {
-      "id": "47af36c0-47c1-4e5b-bfc7-ad645ee6a330",
-      "name": "Contribute",
-      "url": "https://github.com/ajnart/homarr",
-      "behaviour": {
-        "onClickUrl": "https://github.com/ajnart/homarr",
-        "externalUrl": "https://github.com/ajnart/homarr",
-        "isOpeningNewTab": true,
-        "tooltipDescription": ""
-      },
-      "network": {
-        "enabledStatusChecker": false,
-        "statusCodes": []
-      },
-      "appearance": {
-        "iconUrl": "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons@master/png/github.png",
-        "appNameStatus": "normal",
-        "positionAppName": "row-reverse",
-        "lineClampAppName": 2
-      },
-      "integration": {
-        "type": null,
-        "properties": []
-      },
-      "area": {
-        "type": "wrapper",
-        "properties": {
-          "id": "default"
-        }
-      },
-      "shape": {
         "md": {
           "location": {
-            "x": 3,
-            "y": 2
+            "x": 1,
+            "y": 5
           },
           "size": {
-            "width": 2,
+            "width": 1,
             "height": 1
           }
         },
@@ -187,47 +395,41 @@
             "y": 3
           },
           "size": {
-            "width": 2,
-            "height": 1
-          }
-        },
-        "lg": {
-          "location": {
-            "x": 2,
-            "y": 0
-          },
-          "size": {
-            "width": 2,
+            "width": 1,
             "height": 1
           }
         }
-      }
-    },
-    {
-      "id": "47af36c0-47c1-4e5b-bfc7-ad645ee6a990",
-      "name": "Donate",
-      "url": "https://ko-fi.com/ajnart",
-      "behaviour": {
-        "onClickUrl": "https://ko-fi.com/ajnart",
-        "externalUrl": "https://ko-fi.com/ajnart",
-        "isOpeningNewTab": true,
-        "tooltipDescription": "Please consider making a donation"
-      },
-      "network": {
-        "enabledStatusChecker": false,
-        "statusCodes": [
-          "200"
-        ]
-      },
-      "appearance": {
-        "iconUrl": "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons@master/png/ko-fi.png",
-        "appNameStatus": "normal",
-        "positionAppName": "row-reverse",
-        "lineClampAppName": 1
       },
       "integration": {
         "type": null,
         "properties": []
+      }
+    },
+    {
+      "id": "452d0cf3-5268-462b-84b8-6a05a3731e8c",
+      "name": "Gitea",
+      "url": "http://100.82.163.48:3000",
+      "appearance": {
+        "iconUrl": "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/gitea.svg",
+        "appNameStatus": "normal",
+        "positionAppName": "column",
+        "lineClampAppName": 1,
+        "appNameFontSize": 16
+      },
+      "network": {
+        "enabledStatusChecker": true,
+        "statusCodes": [
+          "200",
+          "301",
+          "302",
+          "304",
+          "307",
+          "308"
+        ]
+      },
+      "behaviour": {
+        "isOpeningNewTab": true,
+        "externalUrl": "http://100.82.163.48:3000/"
       },
       "area": {
         "type": "wrapper",
@@ -236,17 +438,7 @@
         }
       },
       "shape": {
-        "md": {
-          "location": {
-            "x": 4,
-            "y": 1
-          },
-          "size": {
-            "width": 1,
-            "height": 1
-          }
-        },
-        "sm": {
+        "lg": {
           "location": {
             "x": 2,
             "y": 4
@@ -256,43 +448,10 @@
             "height": 1
           }
         },
-        "lg": {
-          "location": {
-            "x": 6,
-            "y": 0
-          },
-          "size": {
-            "width": 2,
-            "height": 1
-          }
-        }
-      }
-    }
-  ],
-  "widgets": [
-    {
-      "id": "e3004052-6b83-480e-b458-56e8ccdca5f0",
-      "type": "weather",
-      "properties": {
-        "displayInFahrenheit": false,
-        "location": {
-          "name": "Paris",
-          "latitude": 48.85341,
-          "longitude": 2.3488
-        },
-        "displayCityName": true
-      },
-      "area": {
-        "type": "wrapper",
-        "properties": {
-          "id": "default"
-        }
-      },
-      "shape": {
         "md": {
           "location": {
             "x": 5,
-            "y": 0
+            "y": 2
           },
           "size": {
             "width": 1,
@@ -301,39 +460,45 @@
         },
         "sm": {
           "location": {
-            "x": 2,
-            "y": 0
+            "x": 0,
+            "y": 1
           },
           "size": {
             "width": 1,
             "height": 1
           }
-        },
-        "lg": {
-          "location": {
-            "x": 0,
-            "y": 0
-          },
-          "size": {
-            "width": 2,
-            "height": 1
-          }
         }
+      },
+      "integration": {
+        "type": null,
+        "properties": []
       }
     },
     {
-      "id": "971aa859-8570-49a1-8d34-dd5c7b3638d1",
-      "type": "date",
-      "properties": {
-        "display24HourFormat": true,
-        "dateFormat": "hide",
-        "enableTimezone": false,
-        "timezoneLocation": {
-          "name": "Paris",
-          "latitude": 48.85341,
-          "longitude": 2.3488
-        },
-        "titleState": "city"
+      "id": "f5c46cc6-7a4d-4b85-bef9-08e7634a62fb",
+      "name": "Tailscale",
+      "url": "https://login.tailscale.com/admin/machines",
+      "appearance": {
+        "iconUrl": "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/tailscale-light.svg",
+        "appNameStatus": "normal",
+        "positionAppName": "column",
+        "lineClampAppName": 1,
+        "appNameFontSize": 16
+      },
+      "network": {
+        "enabledStatusChecker": true,
+        "statusCodes": [
+          "200",
+          "301",
+          "302",
+          "304",
+          "307",
+          "308"
+        ]
+      },
+      "behaviour": {
+        "isOpeningNewTab": true,
+        "externalUrl": "https://login.tailscale.com/admin/machines"
       },
       "area": {
         "type": "wrapper",
@@ -342,10 +507,10 @@
         }
       },
       "shape": {
-        "sm": {
+        "lg": {
           "location": {
-            "x": 1,
-            "y": 0
+            "x": 3,
+            "y": 4
           },
           "size": {
             "width": 1,
@@ -355,38 +520,54 @@
         "md": {
           "location": {
             "x": 4,
-            "y": 0
+            "y": 1
           },
           "size": {
             "width": 1,
             "height": 1
           }
         },
-        "lg": {
+        "sm": {
           "location": {
-            "x": 8,
+            "x": 1,
             "y": 0
           },
           "size": {
-            "width": 2,
+            "width": 1,
             "height": 1
           }
         }
+      },
+      "integration": {
+        "type": null,
+        "properties": []
       }
     },
     {
-      "id": "f252768d-9e69-491b-b6b4-8cad04fa30e8",
-      "type": "date",
-      "properties": {
-        "display24HourFormat": true,
-        "dateFormat": "hide",
-        "enableTimezone": true,
-        "timezoneLocation": {
-          "name": "Tokyo",
-          "latitude": 35.6895,
-          "longitude": 139.69171
-        },
-        "titleState": "city"
+      "id": "6210475b-2ebf-4dcf-b450-471b78243e9e",
+      "name": "Gemini",
+      "url": "https://gemini.google.com/app/43e79ed8b831c2cc?hl=pl",
+      "appearance": {
+        "iconUrl": "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/google-gemini.svg",
+        "appNameStatus": "normal",
+        "positionAppName": "column",
+        "lineClampAppName": 1,
+        "appNameFontSize": 16
+      },
+      "network": {
+        "enabledStatusChecker": true,
+        "statusCodes": [
+          "200",
+          "301",
+          "302",
+          "304",
+          "307",
+          "308"
+        ]
+      },
+      "behaviour": {
+        "isOpeningNewTab": true,
+        "externalUrl": "https://gemini.google.com/app/43e79ed8b831c2cc?hl=pl"
       },
       "area": {
         "type": "wrapper",
@@ -395,10 +576,384 @@
         }
       },
       "shape": {
+        "lg": {
+          "location": {
+            "x": 4,
+            "y": 3
+          },
+          "size": {
+            "width": 1,
+            "height": 1
+          }
+        },
+        "md": {
+          "location": {
+            "x": 5,
+            "y": 1
+          },
+          "size": {
+            "width": 1,
+            "height": 1
+          }
+        },
+        "sm": {
+          "location": {
+            "x": 1,
+            "y": 2
+          },
+          "size": {
+            "width": 1,
+            "height": 1
+          }
+        }
+      },
+      "integration": {
+        "type": null,
+        "properties": []
+      }
+    },
+    {
+      "id": "452c9b7c-c458-4036-9647-3dc6b9f536fb",
+      "name": "File Browser",
+      "url": "http://100.82.163.48:8082/files",
+      "appearance": {
+        "iconUrl": "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/filebrowser-quantum.svg",
+        "appNameStatus": "normal",
+        "positionAppName": "column",
+        "lineClampAppName": 1,
+        "appNameFontSize": 16
+      },
+      "network": {
+        "enabledStatusChecker": true,
+        "statusCodes": [
+          "200",
+          "301",
+          "302",
+          "304",
+          "307",
+          "308"
+        ]
+      },
+      "behaviour": {
+        "isOpeningNewTab": true,
+        "externalUrl": "http://100.82.163.48:8082/files/"
+      },
+      "area": {
+        "type": "wrapper",
+        "properties": {
+          "id": "default"
+        }
+      },
+      "shape": {
+        "lg": {
+          "location": {
+            "x": 4,
+            "y": 4
+          },
+          "size": {
+            "width": 1,
+            "height": 1
+          }
+        }
+      },
+      "integration": {
+        "type": null,
+        "properties": []
+      }
+    },
+    {
+      "id": "c59f27f3-7877-46da-b606-85864b55155e",
+      "name": "Azure",
+      "url": "https://portal.azure.com/#home",
+      "appearance": {
+        "iconUrl": "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/azure-container-instances.svg",
+        "appNameStatus": "normal",
+        "positionAppName": "column",
+        "lineClampAppName": 1,
+        "appNameFontSize": 16
+      },
+      "network": {
+        "enabledStatusChecker": true,
+        "statusCodes": [
+          "200",
+          "301",
+          "302",
+          "304",
+          "307",
+          "308"
+        ]
+      },
+      "behaviour": {
+        "isOpeningNewTab": true,
+        "externalUrl": "https://portal.azure.com/#home"
+      },
+      "area": {
+        "type": "wrapper",
+        "properties": {
+          "id": "default"
+        }
+      },
+      "shape": {
+        "lg": {
+          "location": {
+            "x": 5,
+            "y": 4
+          },
+          "size": {
+            "width": 1,
+            "height": 1
+          }
+        },
+        "md": {
+          "location": {
+            "x": 2,
+            "y": 5
+          },
+          "size": {
+            "width": 1,
+            "height": 1
+          }
+        },
+        "sm": {
+          "location": {
+            "x": 2,
+            "y": 2
+          },
+          "size": {
+            "width": 1,
+            "height": 1
+          }
+        }
+      },
+      "integration": {
+        "type": null,
+        "properties": []
+      }
+    },
+    {
+      "id": "49a3fd30-d8f9-4746-8d51-98e0ff6a7efd",
+      "name": "Gmail Rafal",
+      "url": "https://mail.google.com/mail/u/1/#inbox",
+      "appearance": {
+        "iconUrl": "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/gmail.svg",
+        "appNameStatus": "normal",
+        "positionAppName": "column",
+        "lineClampAppName": 1,
+        "appNameFontSize": 16
+      },
+      "network": {
+        "enabledStatusChecker": true,
+        "statusCodes": [
+          "200",
+          "301",
+          "302",
+          "304",
+          "307",
+          "308"
+        ]
+      },
+      "behaviour": {
+        "isOpeningNewTab": true,
+        "externalUrl": "https://mail.google.com/mail/u/1/#inbox"
+      },
+      "area": {
+        "type": "wrapper",
+        "properties": {
+          "id": "default"
+        }
+      },
+      "shape": {
+        "lg": {
+          "location": {
+            "x": 6,
+            "y": 4
+          },
+          "size": {
+            "width": 1,
+            "height": 1
+          }
+        }
+      },
+      "integration": {
+        "type": null,
+        "properties": []
+      }
+    },
+    {
+      "id": "060eb6a5-901d-401a-91a6-47fc25248d26",
+      "name": "Passbolt",
+      "url": "https://pi-passbolt-rc.duckdns.org:444",
+      "appearance": {
+        "iconUrl": "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/passbolt.svg",
+        "appNameStatus": "normal",
+        "positionAppName": "column",
+        "lineClampAppName": 1,
+        "appNameFontSize": 16
+      },
+      "network": {
+        "enabledStatusChecker": true,
+        "statusCodes": [
+          "200",
+          "301",
+          "302",
+          "304",
+          "307",
+          "308"
+        ]
+      },
+      "behaviour": {
+        "isOpeningNewTab": true,
+        "externalUrl": "https://pi-passbolt-rc.duckdns.org:444/"
+      },
+      "area": {
+        "type": "wrapper",
+        "properties": {
+          "id": "default"
+        }
+      },
+      "shape": {
+        "lg": {
+          "location": {
+            "x": 7,
+            "y": 4
+          },
+          "size": {
+            "width": 1,
+            "height": 1
+          }
+        },
+        "md": {
+          "location": {
+            "x": 4,
+            "y": 2
+          },
+          "size": {
+            "width": 1,
+            "height": 1
+          }
+        },
         "sm": {
           "location": {
             "x": 0,
-            "y": 0
+            "y": 9
+          },
+          "size": {
+            "width": 1,
+            "height": 1
+          }
+        }
+      },
+      "integration": {
+        "type": null,
+        "properties": []
+      }
+    },
+    {
+      "id": "e6647293-a27d-46a2-a6c9-6791731961ec",
+      "name": "Nginx-Proxy_Manager",
+      "url": "http://100.92.130.124:81",
+      "appearance": {
+        "iconUrl": "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/nginx-proxy-manager.png",
+        "appNameStatus": "normal",
+        "positionAppName": "column",
+        "lineClampAppName": 1,
+        "appNameFontSize": 16
+      },
+      "network": {
+        "enabledStatusChecker": true,
+        "statusCodes": [
+          "200",
+          "301",
+          "302",
+          "304",
+          "307",
+          "308"
+        ]
+      },
+      "behaviour": {
+        "isOpeningNewTab": true,
+        "externalUrl": "http://100.92.130.124:81"
+      },
+      "area": {
+        "type": "wrapper",
+        "properties": {
+          "id": "default"
+        }
+      },
+      "shape": {
+        "lg": {
+          "location": {
+            "x": 0,
+            "y": 4
+          },
+          "size": {
+            "width": 1,
+            "height": 1
+          }
+        },
+        "md": {
+          "location": {
+            "x": 1,
+            "y": 4
+          },
+          "size": {
+            "width": 1,
+            "height": 1
+          }
+        },
+        "sm": {
+          "location": {
+            "x": 1,
+            "y": 1
+          },
+          "size": {
+            "width": 1,
+            "height": 1
+          }
+        }
+      },
+      "integration": {
+        "type": null,
+        "properties": []
+      }
+    },
+    {
+      "id": "52fbdf80-f4e7-4d70-879e-88d1f33e7a47",
+      "name": "Grafana",
+      "url": "http://100.82.163.48:3001",
+      "appearance": {
+        "iconUrl": "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/grafana.svg",
+        "appNameStatus": "normal",
+        "positionAppName": "column",
+        "lineClampAppName": 1,
+        "appNameFontSize": 16
+      },
+      "network": {
+        "enabledStatusChecker": true,
+        "statusCodes": [
+          "200",
+          "301",
+          "302",
+          "304",
+          "307",
+          "308"
+        ]
+      },
+      "behaviour": {
+        "isOpeningNewTab": true,
+        "externalUrl": "http://100.82.163.48:3001/"
+      },
+      "area": {
+        "type": "wrapper",
+        "properties": {
+          "id": "default"
+        }
+      },
+      "shape": {
+        "lg": {
+          "location": {
+            "x": 0,
+            "y": 3
           },
           "size": {
             "width": 1,
@@ -408,31 +963,37 @@
         "md": {
           "location": {
             "x": 3,
-            "y": 0
+            "y": 1
           },
           "size": {
             "width": 1,
             "height": 1
           }
         },
-        "lg": {
+        "sm": {
           "location": {
-            "x": 8,
-            "y": 1
+            "x": 0,
+            "y": 3
           },
           "size": {
-            "width": 2,
+            "width": 1,
             "height": 1
           }
         }
+      },
+      "integration": {
+        "type": null,
+        "properties": []
       }
-    },
+    }
+  ],
+  "widgets": [
     {
       "id": "86b1921f-efa7-410f-92dd-79553bf3264d",
       "type": "notebook",
       "properties": {
         "showToolbar": true,
-        "content": "<h2><strong>Welcome to Homarr 🚀👋</strong></h2><p>We're glad that you're here! Homarr is a <em>modern </em>and <em>easy to use</em> dashboard that helps you to <strong>organize and manage</strong> your home network from one place. Control is <strong>at your fingertips</strong>.</p><p>We recommend you to read the <a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://homarr.dev/docs/getting-started/after-the-installation\">getting started guide</a> first. To edit this board you must enter the edit mode - only administrators can do this. Adding an app is the first step you should take. You can do this by clicking the <code>Add tile</code> button at the top right and select <code>App</code>. After you provided an internal URL, external URL and selected an icon you can drag it around when holding down the left mouse button. Make it bigger or smaller using the drag icon at the bottom right. When you're happy with it's position, you <strong>must exit edit mode to save your board</strong>. Adding widgets works the same way but may require additional configuration - read the documentation for more information.</p><p>To remove this widget, you must log in to your administrator account and click on the menu to delete it.</p><p><strong><u>Your TODO list:</u></strong></p><ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p>Read the <a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://homarr.dev\">documentation</a></p></div></li><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p>Add your <em>first app</em></p></div></li><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><em>Resize </em>and <em>drag</em> your app to a different position</p></div></li><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p>Add the <em>clock widget</em> to your dashboard</p></div></li><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p>Create a <em>new user</em></p></div></li></ul>"
+        "content": "<h2><strong>Welcome to Homarr 🚀👋</strong></h2><p>We're glad that you're here! Homarr is a <em>modern </em>and <em>easy to use</em> dashboard that helps you to <strong>organize and manage</strong> your home network from one place. Control is <strong>at your fingertips</strong>.</p><p>We recommend you to read the <a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://homarr.dev/docs/getting-started/after-the-installation\">getting started guide</a> first. To edit this board you must enter the edit mode - only administrators can do this. Adding an app is the first step you should take. You can do this by clicking the <code>Add tile</code> button at the top right and select <code>App</code>. After you provided an internal URL, external URL and selected an icon you can drag it around when holding down the left mouse button. Make it bigger or smaller using the drag icon at the bottom right. When you're happy with it's position, you <strong>must exit edit mode to save your board</strong>. Adding widgets works the same way but may require additional configuration - read the documentation for more information.</p><p>To remove this widget, you must log in to your administrator account and click on the menu to delete it.</p><p><strong><u>Your TODO list:</u></strong></p><ul data-type=\"taskList\"><li data-checked=\"true\" data-type=\"taskItem\"><label><input type=\"checkbox\" checked=\"checked\"><span></span></label><div><p>Read the <a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://homarr.dev\">documentation</a></p></div></li><li data-checked=\"true\" data-type=\"taskItem\"><label><input type=\"checkbox\" checked=\"checked\"><span></span></label><div><p>Add your <em>first app</em></p></div></li><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><em>Resize </em>and <em>drag</em> your app to a different position</p></div></li><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p>Add the <em>clock widget</em> to your dashboard</p></div></li><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p>Create a <em>new user</em></p></div></li></ul>"
       },
       "area": {
         "type": "wrapper",
@@ -464,11 +1025,318 @@
         "lg": {
           "location": {
             "x": 0,
-            "y": 1
+            "y": 22
           },
           "size": {
             "width": 6,
             "height": 3
+          }
+        }
+      }
+    },
+    {
+      "id": "971aa859-8570-49a1-8d34-dd5c7b3638d1",
+      "type": "date",
+      "properties": {
+        "display24HourFormat": true,
+        "dateFormat": "DD/MM/YYYY",
+        "enableTimezone": false,
+        "timezoneLocation": {
+          "name": "Paris",
+          "latitude": 48.85341,
+          "longitude": 2.3488
+        },
+        "titleState": "both",
+        "timezone": "Europe/Warsaw",
+        "customTitle": ""
+      },
+      "area": {
+        "type": "wrapper",
+        "properties": {
+          "id": "default"
+        }
+      },
+      "shape": {
+        "sm": {
+          "location": {
+            "x": 1,
+            "y": 0
+          },
+          "size": {
+            "width": 1,
+            "height": 1
+          }
+        },
+        "md": {
+          "location": {
+            "x": 4,
+            "y": 0
+          },
+          "size": {
+            "width": 1,
+            "height": 1
+          }
+        },
+        "lg": {
+          "location": {
+            "x": 4,
+            "y": 0
+          },
+          "size": {
+            "width": 3,
+            "height": 1
+          }
+        }
+      }
+    },
+    {
+      "id": "e3004052-6b83-480e-b458-56e8ccdca5f0",
+      "type": "weather",
+      "properties": {
+        "displayInFahrenheit": false,
+        "location": {
+          "name": "Bialystok",
+          "latitude": 53.13333,
+          "longitude": 23.16433
+        },
+        "displayCityName": true,
+        "displayWeekly": true,
+        "forecastDays": 5
+      },
+      "area": {
+        "type": "wrapper",
+        "properties": {
+          "id": "default"
+        }
+      },
+      "shape": {
+        "md": {
+          "location": {
+            "x": 5,
+            "y": 0
+          },
+          "size": {
+            "width": 1,
+            "height": 1
+          }
+        },
+        "sm": {
+          "location": {
+            "x": 2,
+            "y": 0
+          },
+          "size": {
+            "width": 1,
+            "height": 1
+          }
+        },
+        "lg": {
+          "location": {
+            "x": 4,
+            "y": 1
+          },
+          "size": {
+            "width": 3,
+            "height": 1
+          }
+        }
+      }
+    },
+    {
+      "id": "684837fd-395a-4922-8727-76a796000943",
+      "type": "iframe",
+      "properties": {
+        "embedUrl": "https://alternative.me/crypto/fear-and-greed-index.png",
+        "allowFullScreen": false,
+        "allowScrolling": true,
+        "allowTransparency": true,
+        "allowPayment": false,
+        "allowAutoPlay": false,
+        "allowMicrophone": false,
+        "allowCamera": false,
+        "allowGeolocation": false
+      },
+      "area": {
+        "type": "wrapper",
+        "properties": {
+          "id": "default"
+        }
+      },
+      "shape": {
+        "sm": {
+          "location": {
+            "x": 0,
+            "y": 0
+          },
+          "size": {
+            "width": 1,
+            "height": 1
+          }
+        },
+        "md": {
+          "location": {
+            "x": 0,
+            "y": 0
+          },
+          "size": {
+            "width": 1,
+            "height": 1
+          }
+        },
+        "lg": {
+          "location": {
+            "x": 0,
+            "y": 0
+          },
+          "size": {
+            "width": 4,
+            "height": 3
+          }
+        }
+      }
+    },
+    {
+      "id": "609ff6c6-1746-42c7-8b0c-1cf0f119171e",
+      "type": "rss",
+      "properties": {
+        "rssFeedUrl": [
+          "https://sekurak.pl/feed/",
+          "https://zaufanatrzeciastrona.pl/feed/",
+          "https://niebezpiecznik.pl/feed/",
+          "https://www.bleepingcomputer.com/feed"
+        ],
+        "refreshInterval": 15,
+        "dangerousAllowSanitizedItemContent": false,
+        "textLinesClamp": 3,
+        "sortByPublishDateAscending": false,
+        "sortPostsWithoutPublishDateToTheTop": true,
+        "maximumAmountOfPosts": 19
+      },
+      "area": {
+        "type": "wrapper",
+        "properties": {
+          "id": "default"
+        }
+      },
+      "shape": {
+        "sm": {
+          "location": {
+            "x": 0,
+            "y": 0
+          },
+          "size": {
+            "width": 2,
+            "height": 2
+          }
+        },
+        "md": {
+          "location": {
+            "x": 0,
+            "y": 0
+          },
+          "size": {
+            "width": 2,
+            "height": 2
+          }
+        },
+        "lg": {
+          "location": {
+            "x": 0,
+            "y": 16
+          },
+          "size": {
+            "width": 10,
+            "height": 4
+          }
+        }
+      }
+    },
+    {
+      "id": "4870d51f-ebf0-4ab8-9aef-079de210d899",
+      "type": "dashdot",
+      "properties": {
+        "dashName": "Dashboard",
+        "url": "http://100.82.163.48:3002/",
+        "usePercentages": true,
+        "columns": 1,
+        "graphHeight": 200,
+        "graphsOrder": [
+          {
+            "key": "storage",
+            "subValues": {
+              "enabled": true,
+              "compactView": true,
+              "span": 2,
+              "multiView": true
+            }
+          },
+          {
+            "key": "network",
+            "subValues": {
+              "enabled": true,
+              "compactView": true,
+              "span": 2
+            }
+          },
+          {
+            "key": "cpu",
+            "subValues": {
+              "enabled": true,
+              "multiView": true,
+              "span": 1
+            }
+          },
+          {
+            "key": "ram",
+            "subValues": {
+              "enabled": true,
+              "span": 1
+            }
+          },
+          {
+            "key": "gpu",
+            "subValues": {
+              "enabled": false,
+              "span": 1
+            }
+          }
+        ]
+      },
+      "area": {
+        "type": "wrapper",
+        "properties": {
+          "id": "default"
+        }
+      },
+      "shape": {
+        "sm": {
+          "location": {
+            "x": 0,
+            "y": 0
+          },
+          "size": {
+            "width": 2,
+            "height": 2
+          }
+        },
+        "md": {
+          "location": {
+            "x": 0,
+            "y": 0
+          },
+          "size": {
+            "width": 2,
+            "height": 2
+          }
+        },
+        "lg": {
+          "location": {
+            "x": 7,
+            "y": 0
+          },
+          "size": {
+            "width": 3,
+            "height": 4
           }
         }
       }

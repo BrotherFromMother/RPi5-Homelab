@@ -21,7 +21,9 @@
         name: homelab_network
         state: present
 
-    - name: Ustaw uprawnienia dla folderu danych Passbolt (UID 33 = www-data)
+    # --- SEKCJA UPRAWNIEŃ ---
+
+    - name: Passbolt | Ustaw uprawnienia (UID 33)
       ansible.builtin.file:
         path: "/home/pi/Git/RPi5-Homelab/docker/passbolt/data"
         owner: "33"
@@ -30,16 +32,42 @@
         recurse: yes
         state: directory
 
-    - name: Wdrozenie uslug Docker Compose
+    - name: Gitea | Upewnij się, że foldery istnieją
+      ansible.builtin.file:
+        path: "/home/pi/Git/RPi5-Homelab/docker/gitea/{{ item.path }}"
+        state: directory
+        owner: "{{ item.owner }}"
+        group: "{{ item.group }}"
+        mode: '0755'
+      loop:
+        - { path: 'gitea-data', owner: '1000', group: '1000' }
+        - { path: 'gitea-db', owner: '999', group: '999' }
+        - { path: 'gitea-tailscale-state', owner: '0', group: '0' }
+
+    - name: Gitea | Rekurencyjne ustawienie uprawnień (chown -R)
+      ansible.builtin.file:
+        path: "/home/pi/Git/RPi5-Homelab/docker/gitea/{{ item.path }}"
+        owner: "{{ item.owner }}"
+        group: "{{ item.group }}"
+        recurse: yes
+        state: directory
+      loop:
+        - { path: 'gitea-data', owner: '1000', group: '1000' }
+        - { path: 'gitea-db', owner: '999', group: '999' }
+        - { path: 'gitea-tailscale-state', owner: '0', group: '0' }
+
+    # --- SEKCJA WDROŻENIA ---
+
+    - name: Wdrożenie usług Docker Compose
       community.docker.docker_compose_v2:
         project_src: "/home/pi/Git/RPi5-Homelab/docker/{{ item }}"
         state: present
       loop:
         - samba-ad
-   #     - radius
         - zabbix
         - homarr
-    #    - passbolt
+        - passbolt
+        - gitea  # <--- Dodaj Gitea tutaj!
 
     - name: Czyszczenie nieuzywanych obrazow Docker
       docker_prune:
