@@ -21,9 +21,9 @@
         name: homelab_network
         state: present
 
-    # --- SEKCJA UPRAWNIEŃ ---
+    # --- SEKCJA UPRAWNIEŃ I FOLDERÓW ---
 
-    - name: Passbolt | Ustaw uprawnienia (UID 33)
+    - name: Passbolt | Ustaw uprawnienia danych (UID 33)
       ansible.builtin.file:
         path: "/home/pi/Git/RPi5-Homelab/docker/passbolt/data"
         owner: "33"
@@ -32,31 +32,49 @@
         recurse: yes
         state: directory
 
-    - name: Gitea | Upewnij się, że foldery istnieją
+    - name: Gitea | Ustawienie uprawnień dla folderów danych
       ansible.builtin.file:
         path: "/home/pi/Git/RPi5-Homelab/docker/gitea/{{ item.path }}"
         state: directory
         owner: "{{ item.owner }}"
         group: "{{ item.group }}"
         mode: '0755'
-      loop:
-        - { path: 'gitea-data', owner: '1000', group: '1000' }
-        - { path: 'gitea-db', owner: '999', group: '999' }
-        - { path: 'gitea-tailscale-state', owner: '0', group: '0' }
-
-    - name: Gitea | Rekurencyjne ustawienie uprawnień (chown -R)
-      ansible.builtin.file:
-        path: "/home/pi/Git/RPi5-Homelab/docker/gitea/{{ item.path }}"
-        owner: "{{ item.owner }}"
-        group: "{{ item.group }}"
         recurse: yes
-        state: directory
       loop:
         - { path: 'gitea-data', owner: '1000', group: '1000' }
         - { path: 'gitea-db', owner: '999', group: '999' }
         - { path: 'gitea-tailscale-state', owner: '0', group: '0' }
 
-    # --- SEKCJA WDROŻENIA ---
+    - name: Portainer | Upewnij się, że folder danych istnieje
+      ansible.builtin.file:
+        path: "/home/pi/Git/RPi5-Homelab/docker/portainer/data"
+        state: directory
+        owner: "root"
+        group: "root"
+        mode: '0700'
+
+    - name: Homarr | Ustawienie uprawnień dla konfiguracji (UID 1000)
+      ansible.builtin.file:
+        path: "/home/pi/Git/RPi5-Homelab/docker/homarr/{{ item }}"
+        state: directory
+        owner: "1000"
+        group: "1000"
+        recurse: yes
+      loop:
+        - configs
+        - data
+        - icons
+
+    - name: Zabbix | Ustawienie uprawnień dla bazy danych (UID 999)
+      ansible.builtin.file:
+        path: "/home/pi/Git/RPi5-Homelab/docker/zabbix/data/db"
+        state: directory
+        owner: "999"
+        group: "999"
+        mode: '0750'
+        recurse: yes
+
+    # --- SEKCJA WDROŻENIA (DOCKER COMPOSE) ---
 
     - name: Wdrożenie usług Docker Compose
       community.docker.docker_compose_v2:
@@ -67,7 +85,9 @@
         - zabbix
         - homarr
         - passbolt
-        - gitea  # <--- Dodaj Gitea tutaj!
+        - gitea
+        - portainer
+        - dashdot
 
     - name: Czyszczenie nieuzywanych obrazow Docker
       docker_prune:
