@@ -1,77 +1,79 @@
+version: '3.8'
 
 services:
-  zbx-mysql:
+  mysql:
     image: mariadb:10.5
     container_name: zbx-mysql
-    restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: ZabbixBezpieczne2024!
       MYSQL_DATABASE: zabbix
       MYSQL_USER: zabbix
       MYSQL_PASSWORD: ZabbixBezpieczne2024!
     volumes:
-      - ./data/db:/var/lib/mysql
+      - zabbix-db:/var/lib/mysql
+    restart: unless-stopped
     networks:
-      zabbix-internal:
+      zabbix-network:
         ipv4_address: 172.16.10.2
 
-  zbx-server:
+  zabbix-server:
     image: zabbix/zabbix-server-mysql:ubuntu-7.0-latest
     container_name: zbx-server
-    restart: unless-stopped
+    environment:
+      DB_SERVER_HOST: mysql
+      MYSQL_DATABASE: zabbix
+      MYSQL_USER: zabbix
+      MYSQL_PASSWORD: ZabbixBezpieczne2024!
+    depends_on:
+      - mysql
     ports:
       - "10051:10051"
-    environment:
-      DB_SERVER_HOST: zbx-mysql
-      MYSQL_DATABASE: zabbix
-      MYSQL_USER: zabbix
-      MYSQL_PASSWORD: ZabbixBezpieczne2024!
-    depends_on:
-      - zbx-mysql
+    restart: unless-stopped
     networks:
-      zabbix-internal:
+      zabbix-network:
         ipv4_address: 172.16.10.3
-      homelab_network:
 
-  zbx-web:
+  zabbix-web:
     image: zabbix/zabbix-web-nginx-mysql:ubuntu-7.0-latest
     container_name: zbx-web
-    restart: unless-stopped
-    ports:
-      - "8080:8080"
     environment:
-      DB_SERVER_HOST: zbx-mysql
+      DB_SERVER_HOST: mysql
       MYSQL_DATABASE: zabbix
       MYSQL_USER: zabbix
       MYSQL_PASSWORD: ZabbixBezpieczne2024!
-      ZBX_SERVER_HOST: zbx-server
+      ZBX_SERVER_HOST: zabbix-server
       PHP_TZ: Europe/Warsaw
+    ports:
+      - "8080:8080"
     depends_on:
-      - zbx-server
+      - zabbix-server
+    restart: unless-stopped
     networks:
-      zabbix-internal:
+      zabbix-network:
         ipv4_address: 172.16.10.4
-      homelab_network:
 
-  zbx-agent:
+  zabbix-agent:
     image: zabbix/zabbix-agent:ubuntu-7.0-latest
     container_name: zbx-agent
-    restart: unless-stopped
     environment:
-      ZBX_SERVER_HOST: zbx-server
-      ZBX_HOSTNAME: RPi5-Master-Agent
+      ZBX_SERVER_HOST: zabbix-server
+      ZBX_HOSTNAME: Docker-Agent-1
       ZBX_PASSIVESERVERS: 172.16.10.3
     depends_on:
-      - zbx-server
+      - zabbix-server
+    restart: unless-stopped
     networks:
-      zabbix-internal:
+      zabbix-network:
         ipv4_address: 172.16.10.5
 
+volumes:
+  zabbix-db:
+    external: true
+    name: zabbix_zabbix-db
+
 networks:
-  zabbix-internal:
+  zabbix-network:
     driver: bridge
     ipam:
       config:
         - subnet: 172.16.10.0/24
-  homelab_network:
-    external: true
