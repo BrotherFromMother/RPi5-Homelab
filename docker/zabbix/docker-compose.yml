@@ -5,10 +5,10 @@ services:
     image: mariadb:10.5
     container_name: zbx-mysql
     environment:
-      MYSQL_ROOT_PASSWORD: ZabbixBezpieczne2024!
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: zabbix
       MYSQL_USER: zabbix
-      MYSQL_PASSWORD: ZabbixBezpieczne2024!
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     volumes:
       - zabbix-db:/var/lib/mysql
     restart: unless-stopped
@@ -23,7 +23,7 @@ services:
       DB_SERVER_HOST: mysql
       MYSQL_DATABASE: zabbix
       MYSQL_USER: zabbix
-      MYSQL_PASSWORD: ZabbixBezpieczne2024!
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     depends_on:
       - mysql
     ports:
@@ -40,7 +40,7 @@ services:
       DB_SERVER_HOST: mysql
       MYSQL_DATABASE: zabbix
       MYSQL_USER: zabbix
-      MYSQL_PASSWORD: ZabbixBezpieczne2024!
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       ZBX_SERVER_HOST: zabbix-server
       PHP_TZ: Europe/Warsaw
     ports:

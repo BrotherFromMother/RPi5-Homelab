@@ -21,3 +21,4 @@ docker/samba-ad/config/
 .DS_Store
 *.log
 *.tmp
+.env
