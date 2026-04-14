@@ -1,0 +1,32 @@
+ldap {
+    server = "192.168.8.200"
+    port = 389
+    base_dn = "DC=homelab,DC=local"
+    identity = "CN=radius-service,CN=Users,DC=homelab,DC=local"
+    password = "RadiusAuth2026!"
+
+    user {
+        base_dn = "CN=Users,DC=homelab,DC=local"
+        filter = "(&(sAMAccountName=%{%{Stripped-User-Name}:-%{User-Name}})(memberOf=CN=wifi_users,CN=Users,DC=homelab,DC=local))"
+        scope = "sub"
+    }
+
+    options {
+        password_header = '{Cleartext-Password}'
+        password_attribute = 'User-Password'
+        net_timeout = 10
+        res_timeout = 20
+    }
+
+    pool {
+        start = 5
+        min = 4
+        max = 10
+        spare = 3
+        retry_delay = 1
+    }
+
+    tls {
+        start_tls = no
+    }
+}

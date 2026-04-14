@@ -1,0 +1,41 @@
+server default {
+    listen {
+        type = auth
+        ipaddr = *
+        port = 1812
+    }
+
+    authorize {
+        update request {
+            &Framed-MTU := 512
+        }
+
+        filter_username
+        preprocess
+        chap
+        mschap
+        suffix
+
+        eap {
+            ok = return
+        }
+
+        ldap
+        if (ok) {
+            update control {
+                Auth-Type := ldap
+            }
+        }
+        pap
+    }
+
+    authenticate {
+        Auth-Type ldap {
+            ldap
+        }
+        eap
+    }
+
+    post-auth {
+    }
+}

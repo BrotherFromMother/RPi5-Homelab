@@ -1,11 +1,14 @@
 services:
   radius:
-    image: freeradius/freeradius-server:latest
+    build: .
     container_name: freeradius-server
-    restart: always
+    restart: unless-stopped
     volumes:
-      - ./config/clients.conf:/etc/raddb/clients.conf:ro
-      - ../samba-ad/data:/var/lib/samba:ro 
+      - ./config/clients.conf:/etc/freeradius/3.0/clients.conf:ro
+      - ./config/mods-available/ldap:/etc/freeradius/3.0/mods-enabled/ldap:ro
+      - ./config/mods-available/eap:/etc/freeradius/3.0/mods-enabled/eap:ro
+      - ./config/sites-available/default:/etc/freeradius/3.0/sites-enabled/default:ro
+      - ./config/sites-available/inner-tunnel:/etc/freeradius/3.0/sites-enabled/inner-tunnel:ro
     networks:
       macvlan_net:
         ipv4_address: 192.168.8.201

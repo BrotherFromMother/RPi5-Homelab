@@ -1,0 +1,20 @@
+server inner-tunnel {
+    authorize {
+        filter_username
+
+        ldap
+        if (notfound) {
+            reject
+        }
+
+        update control {
+            Auth-Type := LDAP
+        }
+    }
+
+    authenticate {
+        Auth-Type LDAP {
+            ldap
+        }
+    }
+}

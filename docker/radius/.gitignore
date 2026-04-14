@@ -1,0 +1,12 @@
+# Ignoruj dane bazy danych (gdybyś kiedyś wrócił do SQL)
+db_data/
+
+# Ignoruj logi
+*.log
+
+# Ignoruj pliki tymczasowe edytorów
+*.save*
+*.swp
+
+# Ignoruj klucze prywatne (jeśli generowałeś własne certyfikaty w folderze config)
+config/certs/*.key
