@@ -1,7 +1,6 @@
-
 services:
   mysql:
-    image: mariadb:10.5
+    image: mariadb:10.11
     container_name: zbx-mysql
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
@@ -18,11 +17,13 @@ services:
   zabbix-server:
     image: zabbix/zabbix-server-mysql:ubuntu-7.0-latest
     container_name: zbx-server
+    dns: 192.168.8.200
     environment:
       DB_SERVER_HOST: mysql
       MYSQL_DATABASE: zabbix
       MYSQL_USER: zabbix
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      ZBX_ENCRYPTION_INTERNAL_KEY: "homelab_secret_key"
     depends_on:
       - mysql
     ports:
@@ -35,6 +36,7 @@ services:
   zabbix-web:
     image: zabbix/zabbix-web-nginx-mysql:ubuntu-7.0-latest
     container_name: zbx-web
+    dns: 192.168.8.200
     environment:
       DB_SERVER_HOST: mysql
       MYSQL_DATABASE: zabbix
@@ -51,16 +53,27 @@ services:
       zabbix-network:
         ipv4_address: 172.16.10.4
 
-  zabbix-agent:
-    image: zabbix/zabbix-agent:ubuntu-7.0-latest
+  zbx-agent:
+    image: zabbix/zabbix-agent2:ubuntu-7.0-latest
     container_name: zbx-agent
-    environment:
-      ZBX_SERVER_HOST: zabbix-server
-      ZBX_HOSTNAME: Docker-Agent-1
-      ZBX_PASSIVESERVERS: 172.16.10.3
+    privileged: true
+    user: root
+    restart: unless-stopped
     depends_on:
       - zabbix-server
-    restart: unless-stopped
+    ports:
+      - "10050:10050"
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/host/rootfs:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /var/run/dbus/system_bus_socket:/var/run/dbus/system_bus_socket:ro
+    environment:
+      - ZBX_HOSTNAME=RPi5-Homelab
+      - ZBX_SERVER_HOST=zabbix-server
+      - ZBX_PASSIVESERVERS=172.16.10.3
+      - ZBX_ENCRYPTION_INTERNAL_KEY=homelab_secret_key
     networks:
       zabbix-network:
         ipv4_address: 172.16.10.5
@@ -76,3 +89,6 @@ networks:
     ipam:
       config:
         - subnet: 172.16.10.0/24
+  macvlan_net:
+    external: true
+    name: homelab_macvlan
